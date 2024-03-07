@@ -21,7 +21,7 @@ class MealsManager {
             let meals = decodedData.meals
             let baseDetailURL = try apiService.retrieveAPIAddress(from: Constant.MealDetailManager.resourceFile, basedOn: Constant.MealDetailManager.key)
             
-            // fetch detail values of all meals concurrently and filter out meals with null detail value, no recommended when you fetch a large amount of data.
+            // fetch detail values of all meals concurrently and filter out meals with null detail value, not recommended to fetch all meal details at once when the amount of data is large.
             for meal in meals {
                 let detailURL = baseDetailURL + meal.idMeal
                 async let detail = fetchMealDetail(from: detailURL)
