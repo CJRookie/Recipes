@@ -83,6 +83,7 @@
 				23B0BE522B96711B004F43ED /* Models */,
 				23D51AA32B9931DF0010D9B6 /* Components */,
 				23B0BE542B967141004F43ED /* Utilities */,
+				23D51ABF2B997B630010D9B6 /* Unused */,
 				23B0BE3C2B9651F9004F43ED /* Assets.xcassets */,
 				23B0BE4E2B96666E004F43ED /* Config.plist */,
 				23B0BE3E2B9651F9004F43ED /* Preview Content */,
@@ -131,7 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				23B0BE482B965453004F43ED /* MealsManager.swift */,
-				23B0BE592B96C982004F43ED /* MealDetailManager.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -152,6 +152,14 @@
 				23B0BE3A2B9651F4004F43ED /* ContentView.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		23D51ABF2B997B630010D9B6 /* Unused */ = {
+			isa = PBXGroup;
+			children = (
+				23B0BE592B96C982004F43ED /* MealDetailManager.swift */,
+			);
+			path = Unused;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
