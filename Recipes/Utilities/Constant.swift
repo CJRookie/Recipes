@@ -29,7 +29,7 @@ struct Constant {
     }
     
     struct MealDetail {
-        static let outermostVStackSpacing: CGFloat = 40
+        static let outermostVStackSpacing: CGFloat = 32
         static let cornerRadius: CGFloat = 40
         static let roundedRecOpacity: CGFloat = 0.8
         static let mainContentVStackSpacing: CGFloat = 36
