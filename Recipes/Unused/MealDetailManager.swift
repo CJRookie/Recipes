@@ -8,7 +8,9 @@
 import Foundation
 
 /*
- If it is allowed to display the meals with null detail value in the Dessert category list and let users know that detail for the currently selected meal is not available by displaying a custom view with an appropriate message, then this class will be used to manage detail value for each meal, and the 'fetchMealDetail' func will be called when a user selects a meal.
+ If it is allowed to display the meals with null detail value in the Dessert category list and let users know that detail for 
+ the currently selected meal is not available by displaying a custom view with an appropriate message, then this class will be 
+ used to manage detail value for each meal, and the 'fetchMealDetail' func will be called when a user selects a meal.
  */
 @Observable
 class MealDetailManager {
