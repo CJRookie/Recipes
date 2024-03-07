@@ -14,6 +14,7 @@ struct Constant {
         static let shadowRadius: CGFloat = 2
         static let shadowOffset: CGFloat = 1
         static let roundedRecHeight: CGFloat = 96
+        static let chevronColorOpacity: CGFloat = 0.8
         static let imageSize: CGFloat = 88
         static let overlayPadding: CGFloat = 8
     }

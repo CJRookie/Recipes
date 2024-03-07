@@ -20,7 +20,7 @@ struct MealRow: View {
                     Text(meal.strMeal)
                     Spacer()
                     Image(systemName: "chevron.right")
-                        .foregroundStyle(.green)
+                        .foregroundStyle(.orange.opacity(Constant.MealRow.chevronColorOpacity))
                 }
                 .padding(Constant.MealRow.overlayPadding)
             }

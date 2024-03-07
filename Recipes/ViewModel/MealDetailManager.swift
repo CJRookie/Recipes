@@ -12,18 +12,18 @@ import Foundation
  */
 @Observable
 class MealDetailManager {
-    private(set) var meal: Meals.Meal
+    private let mealID: String
     private(set) var mealDetail: Meal.Detail?
     private let apiService = APIService()
     
-    init(_ meal: Meals.Meal) {
-        self.meal = meal
+    init(_ mealID: String) {
+        self.mealID = mealID
     }
     
     func fetchMealDetail() async {
         do {
             let baseURL = try apiService.retrieveAPIAddress(from: Constant.MealDetailManager.resourceFile, basedOn: Constant.MealDetailManager.key)
-            let apiURL = baseURL + meal.idMeal
+            let apiURL = baseURL + mealID
             let data = try await apiService.downloadData(from: apiURL)
             let decodedData = try JSONDecoder().decode(Meal.self, from: data)
             if let detail = decodedData.meals.first {

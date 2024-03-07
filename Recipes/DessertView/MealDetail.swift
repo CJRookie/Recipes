@@ -10,7 +10,7 @@ import SwiftUI
 struct MealDetail: View {
     @State private var themes: [Color] = [Color.green, Color.orange, Color.blue, Color.pink, Color.yellow, Color.purple]
     let mealDetail: Meal.Detail
-    
+
     var body: some View {
         VStack(spacing: Constant.MealDetail.outermostVStackSpacing) {
             dessertImage
@@ -31,13 +31,13 @@ struct MealDetail: View {
         .scrollIndicators(.hidden)
         .ignoresSafeArea(edges: .top)
     }
-    
+
     private var headingSection: some View {
         Text(mealDetail.strMeal)
             .font(.system(size: Constant.MealDetail.headingSecFontSize, weight: .semibold))
             .padding(.top, Constant.MealDetail.headingSecTopPadding)
     }
-    
+
     private var ingredientsSection: some View {
         VStack {
             HStack(alignment: .lastTextBaseline) {
@@ -48,7 +48,7 @@ struct MealDetail: View {
                     .foregroundStyle(.gray)
             }
             .padding(.horizontal)
-            
+
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(0..<mealDetail.strIngredients.count, id: \.self) { index in
@@ -59,7 +59,7 @@ struct MealDetail: View {
             }
         }
     }
-    
+
     private var instructionsSection: some View {
         VStack(alignment: .leading, spacing: Constant.MealDetail.instructionsSecSpacing) {
             Text("Instructions")
@@ -68,7 +68,7 @@ struct MealDetail: View {
         }
         .padding(.horizontal)
     }
-    
+
     private var dessertImage: some View {
         ZStack {
             AsyncImage(url: URL(string: mealDetail.strMealThumb)) { phase in
@@ -88,8 +88,8 @@ struct MealDetail: View {
 //    @State private var manager: MealDetailManager
 //    @State private var themes: [Color] = [Color.green, Color.orange, Color.blue, Color.pink, Color.yellow, Color.purple]
 //    
-//    init(_ meal: Meals.Meal) {
-//        _manager = State(initialValue: MealDetailManager(meal))
+//    init(_ mealID: String) {
+//        _manager = State(initialValue: MealDetailManager(mealID))
 //    }
 //    
 //    var body: some View {
@@ -157,7 +157,7 @@ struct MealDetail: View {
 //    
 //    private var dessertImage: some View {
 //        ZStack {
-//            AsyncImage(url: URL(string: manager.meal.strMealThumb)) { phase in
+//            AsyncImage(url: URL(string: manager.mealDetail?.strMealThumb ?? "")) { phase in
 //                if let image = phase.image {
 //                    image
 //                        .resizable()
@@ -174,3 +174,5 @@ struct MealDetail: View {
 //        .frame(height: Constant.MealDetail.imageHeight)
 //    }
 }
+
+    
