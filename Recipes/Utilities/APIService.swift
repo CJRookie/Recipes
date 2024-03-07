@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct APIService {
+class APIService {
     
     /// Downloads data from a specified URL asynchronously.
     /// - Parameter url: The URL from which to download the data.

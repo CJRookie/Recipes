@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct RecipesApp: App {
-    @State private var mealsManager = MealsManager()
+    @State private var mealsManager = MealsManager(apiService: APIService())
     
     var body: some Scene {
         WindowGroup {

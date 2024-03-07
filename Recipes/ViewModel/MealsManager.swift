@@ -10,7 +10,11 @@ import Foundation
 @Observable
 class MealsManager {
     private(set) var mealArr: [(Meals.Meal, Meal.Detail)] = []
-    private let apiService = APIService()
+    private let apiService: APIService
+    
+    init(apiService: APIService) {
+        self.apiService = apiService
+    }
     
     /// Fetches meal data from the specified APIs, filtering out meals with null detail values
     func fetchMealData() async {
