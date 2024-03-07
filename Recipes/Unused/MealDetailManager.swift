@@ -16,10 +16,11 @@ import Foundation
 class MealDetailManager {
     private let mealID: String
     private(set) var mealDetail: Meal.Detail?
-    private let apiService = APIService()
+    private let apiService: APIService
     
-    init(_ mealID: String) {
+    init(_ mealID: String, apiService: APIService) {
         self.mealID = mealID
+        self.apiService = apiService
     }
     
     func fetchMealDetail() async {
