@@ -25,7 +25,6 @@ struct CategoryBar: View {
                             .font(.headline)
                             .foregroundStyle(.black)
                     }
-                    .tag(item.name)
                     .frame(width: Constant.CategoryBar.frameWidth, height: Constant.CategoryBar.frameHeight)
                     .onTapGesture {
                         withAnimation(.smooth(duration: Constant.CategoryBar.animationDuration)) {

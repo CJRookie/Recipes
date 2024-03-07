@@ -174,9 +174,3 @@ struct MealDetail: View {
 //        .frame(height: Constant.MealDetail.imageHeight)
 //    }
 }
-
-//#Preview {
-//    Meals.Meal(strMeal: "Choc Chip Pecan Pie", strMealThumb: "https://www.themealdb.com/images/media/meals/rqvwxt1511384809.jpg", idMeal: "52856")
-//    return MealDetail(meal)
-//}
-
