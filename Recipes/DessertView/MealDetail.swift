@@ -19,7 +19,7 @@ struct MealDetail: View {
     }
 
     var body: some View {
-        detail
+        detailView
             .ignoresSafeArea(edges: .top)
             .task {
                 mealDetail = await manager.fetchMealDetail(meal)
@@ -28,7 +28,7 @@ struct MealDetail: View {
     }
     
     @ViewBuilder
-    private var detail: some View {
+    private var detailView: some View {
         if mealDetail != nil {
             VStack(spacing: Constant.MealDetail.outermostVStackSpacing) {
                 dessertImage
