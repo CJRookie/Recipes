@@ -9,31 +9,56 @@ import SwiftUI
 
 struct MealDetail: View {
     @State private var themes: [Color] = [Color.green, Color.orange, Color.blue, Color.pink, Color.yellow, Color.purple]
-    let mealDetail: Meal.Detail
-
-    var body: some View {
-        VStack(spacing: Constant.MealDetail.outermostVStackSpacing) {
-            dessertImage
-            ZStack {
-                RoundedRectangle(cornerRadius: Constant.MealDetail.cornerRadius)
-                    .fill(.white.opacity(Constant.MealDetail.roundedRecOpacity))
-                ScrollView {
-                    VStack(spacing: Constant.MealDetail.mainContentVStackSpacing) {
-                        headingSection
-                        ingredientsSection
-                        instructionsSection
-                    }
-                }
-                .padding(.bottom)
-                .clipShape(RoundedRectangle(cornerRadius: Constant.MealDetail.cornerRadius))
-            }
-        }
-        .scrollIndicators(.hidden)
-        .ignoresSafeArea(edges: .top)
+    @State private var manager: MealDetailManager
+    @State private var image = UIImage()
+    
+    init(_ meal: Meals.Meal) {
+        _manager = State(initialValue: MealDetailManager(meal))
     }
 
+    var body: some View {
+        detail
+            .ignoresSafeArea(edges: .top)
+            .task {
+                await manager.fetchMealDetail()
+                image = await manager.getImage(from: manager.meal.strMealThumb) ?? UIImage()
+            }
+    }
+    
+    @ViewBuilder
+    private var detail: some View {
+        if manager.mealDetail != nil {
+            VStack(spacing: Constant.MealDetail.outermostVStackSpacing) {
+                dessertImage
+                ZStack {
+                    RoundedRectangle(cornerRadius: Constant.MealDetail.cornerRadius)
+                        .fill(.white.opacity(Constant.MealDetail.roundedRecOpacity))
+                    ScrollView {
+                        VStack(spacing: Constant.MealDetail.mainContentVStackSpacing) {
+                            headingSection
+                            ingredientsSection
+                            instructionsSection
+                        }
+                    }
+                    .padding(.bottom)
+                    .clipShape(RoundedRectangle(cornerRadius: Constant.MealDetail.cornerRadius))
+                }
+            }
+            .scrollIndicators(.hidden)
+        } else {
+            VStack(spacing: Constant.MealDetail.outermostVStackSpacing) {
+                dessertImage
+                ZStack {
+                    RoundedRectangle(cornerRadius: Constant.MealDetail.cornerRadius)
+                        .fill(.white.opacity(Constant.MealDetail.roundedRecOpacity))
+                    Text("Instructions will be added soon.")
+                }
+            }
+        }
+    }
+    
     private var headingSection: some View {
-        Text(mealDetail.strMeal)
+        Text(manager.mealDetail?.strMeal ?? "")
             .font(.system(size: Constant.MealDetail.headingSecFontSize, weight: .semibold))
             .padding(.top, Constant.MealDetail.headingSecTopPadding)
     }
@@ -44,15 +69,17 @@ struct MealDetail: View {
                 Text("Ingredients")
                     .font(.system(size: Constant.MealDetail.subtitleFontSize, weight: .medium))
                 Spacer()
-                Text("\(mealDetail.strIngredients.count) Item(s)")
+                Text("\(manager.mealDetail?.strIngredients.count ?? 0) Item(s)")
                     .foregroundStyle(.gray)
             }
             .padding(.horizontal)
 
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(0..<mealDetail.strIngredients.count, id: \.self) { index in
-                        IngredientCard(ingredient: mealDetail.strIngredients[index], measure: mealDetail.strMeasures[index], theme: themes[index % themes.count])
+                    ForEach(0..<(manager.mealDetail?.strIngredients.count ?? 0), id: \.self) { index in
+                        if let ingredient = manager.mealDetail?.strIngredients[index], let measure = manager.mealDetail?.strMeasures[index] {
+                            IngredientCard(ingredient: ingredient, measure: measure, theme: themes[index % themes.count])
+                        }
                     }
                 }
                 .padding(.leading)
@@ -64,23 +91,17 @@ struct MealDetail: View {
         VStack(alignment: .leading, spacing: Constant.MealDetail.instructionsSecSpacing) {
             Text("Instructions")
                 .font(.system(size: Constant.MealDetail.subtitleFontSize, weight: .medium))
-            Text(mealDetail.strInstructions)
+            Text(manager.mealDetail?.strInstructions ?? "")
         }
         .padding(.horizontal)
     }
 
     private var dessertImage: some View {
         ZStack {
-            AsyncImage(url: URL(string: mealDetail.strMealThumb)) { phase in
-                if let image = phase.image {
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .clipShape(.buttonBorder)
-                } else {
-                    Color.red
-                }
-            }
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFill()
+                .clipShape(.buttonBorder)
             LinearGradient(gradient: Gradient(colors: [.clear, .white]), startPoint: .top, endPoint: .bottom)
         }
         .frame(height: Constant.MealDetail.imageHeight)

@@ -15,7 +15,7 @@ class APIService {
     /// - Throws:
     ///   - `APIServiceError.invalidURL`: If the provided URL is invalid or cannot be converted.
     ///   - `APIServiceError.invalidHTTPResponse`: If the HTTP response status code is outside the range of 200 to 299.
-    func downloadData(from url: String) async throws -> Data {
+    func downloadData(from url: String) async throws -> (Data, URLResponse) {
         guard let url = URL(string: url) else { throw APIServiceError.invalidURL }
         
         let (data, response) = try await URLSession.shared.data(from: url)
@@ -24,7 +24,7 @@ class APIService {
             throw APIServiceError.invalidHTTPResponse
         }
         
-        return data
+        return (data, response)
     }
     
     /// Retrieves the API address from a specified property list (plist) file based on a provided key.

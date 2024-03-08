@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct MealList: View {
-    @Environment(MealsManager.self) private var mealsManager
+    @Environment(MealsManager.self) private var manager
     @State private var selectedCategory: CategoryItem = .dessert
     
-    var currentList: [(Meals.Meal, Meal.Detail)] {
+    var currentList: [Meals.Meal] {
         switch selectedCategory {
         case .dessert:
-            mealsManager.mealArr
+            manager.meals
         case .lunch:
             []
         }
@@ -23,11 +23,11 @@ struct MealList: View {
     var body: some View {
         NavigationStack {
             CategoryBar(selectedItem: $selectedCategory)
-            List(currentList, id: \.0) { meal in
+            List(currentList) { meal in
                 ZStack {
-                    MealRow(meal: meal.0)
+                    MealRow(meal: meal)
                     // hide the default chevron symbol
-                    NavigationLink(value: meal.1) {
+                    NavigationLink(value: meal) {
                         EmptyView()
                     }
                     .opacity(0)
@@ -36,9 +36,12 @@ struct MealList: View {
             }
             .listStyle(.plain)
             .navigationTitle("Category")
-            .navigationDestination(for: Meal.Detail.self) { detail in
-                MealDetail(mealDetail: detail)
+            .navigationDestination(for: Meals.Meal.self) { meal in
+                MealDetail(meal)
             }
+        }
+        .task {
+            await manager.fetchMealData()
         }
     }
 }

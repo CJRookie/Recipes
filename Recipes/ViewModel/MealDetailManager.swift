@@ -1,5 +1,5 @@
 //
-//  MealsManager.swift
+//  MealDetailManager.swift
 //  Recipes
 //
 //  Created by CJ on 3/4/24.
@@ -9,17 +9,19 @@ import Foundation
 import UIKit
 
 @Observable
-class MealsManager {
-    private(set) var meals: [Meals.Meal] = []
+class MealDetailManager {
+    private(set) var meal: Meals.Meal
+    private(set) var mealDetail: Meal.Detail?
     private let mealDataCenter: MealDataCenter
     
-    init(mealDataCenter: MealDataCenter = MealDataCenter()) {
+    init(_ meal: Meals.Meal, mealDataCenter: MealDataCenter = MealDataCenter()) {
+        self.meal = meal
         self.mealDataCenter = mealDataCenter
     }
     
-    func fetchMealData() async {
+    func fetchMealDetail() async {
         do {
-            meals = try await mealDataCenter.fetchMealData()
+            mealDetail = try await mealDataCenter.fetchMealDetail(for: meal)
         } catch {
             print("Error: \(String(describing: error))")
         }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(MealsManager.self) private var mealsManager
     @State private var selection: Tab = .home
     
     enum Tab: String {
@@ -27,8 +26,6 @@ struct ContentView: View {
                 }
                 .tag(Tab.home)
         }
-        .task {
-            await mealsManager.fetchMealData()
-        }
+        
     }
 }
