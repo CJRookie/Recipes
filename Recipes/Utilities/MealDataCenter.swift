@@ -17,6 +17,8 @@ class MealDataCenter {
         self.sharedURLCache = cache
     }
     
+    /// Fetches meal data from a specified API.
+    /// - Returns: An array of `Meals.Meal` representing the fetched meal data.
     func fetchMealData() async throws -> [Meals.Meal] {
         let mealURL = try apiService.retrieveAPIAddress(from: Constant.MealsManager.resourceFile, basedOn: Constant.MealsManager.dessertURLKey)
         let downloadedData = try await apiService.downloadData(from: mealURL)
@@ -24,6 +26,9 @@ class MealDataCenter {
         return decodedData.meals
     }
     
+    /// Fetches detailed information for a specific meal.
+    /// - Parameter meal: The meal for which to fetch detailed information.
+    /// - Returns: A `Meal.Detail` representing the detailed information of the specified meal, or `nil` if not available.
     func fetchMealDetail(for meal: Meals.Meal) async throws -> Meal.Detail? {
         let baseURL = try apiService.retrieveAPIAddress(from: Constant.MealsManager.resourceFile, basedOn: Constant.MealsManager.detailBaseURLkey)
         let apiURL = baseURL + meal.idMeal
@@ -35,7 +40,10 @@ class MealDataCenter {
         
         return nil
     }
-
+    
+    /// Retrieves a meal image from the specified URL.
+    /// - Parameter url: The URL from which to retrieve/fetch the meal image.
+    /// - Returns: A `UIImage` representing the fetched meal image, or `nil` if the image is not available.
     func getMealImage(from url: URL) async throws -> UIImage? {
         let request = URLRequest(url: url)
         if let cachedData = sharedURLCache.cachedResponse(for: request)?.data, let image = UIImage(data: cachedData) {
@@ -45,6 +53,9 @@ class MealDataCenter {
         }
     }
     
+    /// Fetches a meal image from the specified URL.
+    /// - Parameter url: The URL from which to fetch the meal image.
+    /// - Returns: A `UIImage` representing the fetched meal image, or `nil` if the image is not available.
     private func fetchMealImage(from url: URL) async throws -> UIImage? {
         let downloadedData = try await apiService.downloadData(from: url.absoluteString)
         let image = UIImage(data: downloadedData.0)
@@ -52,6 +63,11 @@ class MealDataCenter {
         return image
     }
     
+    /// Caches a meal image for future use.
+    /// - Parameters:
+    ///   - url: The URL from which the meal image was fetched.
+    ///   - response: The URLResponse received during the image fetching process.
+    ///   - data: The data representing the fetched meal image.
     private func cacheMealImage(from url: URL, response: URLResponse, data: Data) {
         let request = URLRequest(url: url)
         let cachedURLResponse = CachedURLResponse(response: response, data: data)
