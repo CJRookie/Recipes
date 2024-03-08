@@ -11,7 +11,7 @@ struct MealDetail: View {
     @Environment(MealsManager.self) private var manager
     @State private var themes: [Color] = [Color.green, Color.orange, Color.blue, Color.pink, Color.yellow, Color.purple]
     @State private var mealDetail: Meal.Detail?
-    @State private var image = UIImage()
+    @State private var image: UIImage?
     @State private var meal: Meals.Meal
     
     init(_ meal: Meals.Meal) {
@@ -23,7 +23,7 @@ struct MealDetail: View {
             .ignoresSafeArea(edges: .top)
             .task {
                 mealDetail = await manager.fetchMealDetail(meal)
-                image = await manager.getImage(from: meal.strMealThumb) ?? UIImage()
+                image = await manager.getImage(from: meal.strMealThumb)
             }
     }
     
@@ -100,7 +100,7 @@ struct MealDetail: View {
 
     private var dessertImage: some View {
         ZStack {
-            Image(uiImage: image)
+            Image(uiImage: image ?? UIImage())
                 .resizable()
                 .scaledToFill()
                 .clipShape(.buttonBorder)
