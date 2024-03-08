@@ -51,11 +51,7 @@ struct Constant {
     
     struct MealsManager {
         static let resourceFile = "Config"
-        static let key = "DESSERT_API_ADDRESS"
-    }
-    
-    struct MealDetailManager {
-        static let resourceFile = "Config"
-        static let key = "MEALDETAIL_API_ADDRESS"
+        static let dessertURLKey = "DESSERT_API_ADDRESS"
+        static let detailBaseURLkey = "MEALDETAIL_API_ADDRESS"
     }
 }

@@ -11,7 +11,6 @@ import UIKit
 @Observable
 class MealDetailManager {
     private(set) var meal: Meals.Meal
-    private(set) var mealDetail: Meal.Detail?
     private let mealDataCenter: MealDataCenter
     
     init(_ meal: Meals.Meal, mealDataCenter: MealDataCenter = MealDataCenter()) {
@@ -19,12 +18,14 @@ class MealDetailManager {
         self.mealDataCenter = mealDataCenter
     }
     
-    func fetchMealDetail() async {
+    func fetchMealDetail(_ meal: Meals.Meal) async -> Meal.Detail? {
         do {
-            mealDetail = try await mealDataCenter.fetchMealDetail(for: meal)
+            return try await mealDataCenter.fetchMealDetail(for: meal)
         } catch {
             print("Error: \(String(describing: error))")
         }
+        
+        return nil
     }
     
     func getImage(from url: String) async -> UIImage? {

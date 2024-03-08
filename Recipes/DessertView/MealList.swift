@@ -10,11 +10,12 @@ import SwiftUI
 struct MealList: View {
     @Environment(MealsManager.self) private var manager
     @State private var selectedCategory: CategoryItem = .dessert
+    @State private var mealList: [Meals.Meal] = []
     
     var currentList: [Meals.Meal] {
         switch selectedCategory {
         case .dessert:
-            manager.meals
+            mealList
         case .lunch:
             []
         }
@@ -41,7 +42,7 @@ struct MealList: View {
             }
         }
         .task {
-            await manager.fetchMealData()
+            mealList = await manager.fetchMealData()
         }
     }
 }

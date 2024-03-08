@@ -10,19 +10,30 @@ import UIKit
 
 @Observable
 class MealsManager {
-    private(set) var meals: [Meals.Meal] = []
     private let mealDataCenter: MealDataCenter
     
     init(mealDataCenter: MealDataCenter = MealDataCenter()) {
         self.mealDataCenter = mealDataCenter
     }
     
-    func fetchMealData() async {
+    func fetchMealData() async -> [Meals.Meal] {
         do {
-            meals = try await mealDataCenter.fetchMealData()
+            return try await mealDataCenter.fetchMealData()
         } catch {
             print("Error: \(String(describing: error))")
         }
+        
+        return []
+    }
+    
+    func fetchMealDetail(_ meal: Meals.Meal) async -> Meal.Detail? {
+        do {
+            return try await mealDataCenter.fetchMealDetail(for: meal)
+        } catch {
+            print("Error: \(String(describing: error))")
+        }
+        
+        return nil
     }
     
     func getImage(from url: String) async -> UIImage? {

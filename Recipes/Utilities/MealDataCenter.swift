@@ -18,14 +18,14 @@ class MealDataCenter {
     }
     
     func fetchMealData() async throws -> [Meals.Meal] {
-        let mealURL = try apiService.retrieveAPIAddress(from: Constant.MealsManager.resourceFile, basedOn: Constant.MealsManager.key)
+        let mealURL = try apiService.retrieveAPIAddress(from: Constant.MealsManager.resourceFile, basedOn: Constant.MealsManager.dessertURLKey)
         let downloadedData = try await apiService.downloadData(from: mealURL)
         let decodedData = try JSONDecoder().decode(Meals.self, from: downloadedData.0)
         return decodedData.meals
     }
     
     func fetchMealDetail(for meal: Meals.Meal) async throws -> Meal.Detail? {
-        let baseURL = try apiService.retrieveAPIAddress(from: Constant.MealDetailManager.resourceFile, basedOn: Constant.MealDetailManager.key)
+        let baseURL = try apiService.retrieveAPIAddress(from: Constant.MealsManager.resourceFile, basedOn: Constant.MealsManager.detailBaseURLkey)
         let apiURL = baseURL + meal.idMeal
         let downloadedData = try await apiService.downloadData(from: apiURL)
         let decodedData = try JSONDecoder().decode(Meal.self, from: downloadedData.0)

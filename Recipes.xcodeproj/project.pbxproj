@@ -135,7 +135,6 @@
 			isa = PBXGroup;
 			children = (
 				23B0BE482B965453004F43ED /* MealsManager.swift */,
-				23B0BE592B96C982004F43ED /* MealDetailManager.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -161,6 +160,7 @@
 		23D51ABF2B997B630010D9B6 /* Unused */ = {
 			isa = PBXGroup;
 			children = (
+				23B0BE592B96C982004F43ED /* MealDetailManager.swift */,
 			);
 			path = Unused;
 			sourceTree = "<group>";
