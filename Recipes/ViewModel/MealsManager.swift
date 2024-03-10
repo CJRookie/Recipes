@@ -26,14 +26,14 @@ class MealsManager {
         return []
     }
     
-    func fetchMealDetail(_ meal: Meals.Meal) async -> Meal.Detail? {
+    func fetchMealDetail(_ meal: Meals.Meal) async -> (Meal.Detail?, Error?) {
         do {
-            return try await mealDataCenter.fetchMealDetail(for: meal)
+            let detail = try await mealDataCenter.fetchMealDetail(for: meal)
+            return (detail, nil)
         } catch {
             print("Error: \(String(describing: error))")
+            return (nil, error)
         }
-        
-        return nil
     }
     
     func getImage(from url: String) async -> UIImage? {
