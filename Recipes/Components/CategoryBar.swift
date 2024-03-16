@@ -41,8 +41,8 @@ struct CategoryBar: View {
 }
 
 enum CategoryItem: String, CaseIterable, Identifiable {
+    case favorite
     case dessert
-    case lunch
     
     var name: String {
         rawValue.capitalized

@@ -1,5 +1,5 @@
 //
-//  MealDataCenter.swift
+//  MealDataProvider.swift
 //  Recipes
 //
 //  Created by CJ on 3/5/24.
@@ -8,13 +8,20 @@
 import Foundation
 import UIKit
 
-class MealDataCenter {
+protocol MealDataService {
+    func fetchMealData() async throws -> [Meals.Meal]
+    func fetchMealDetail(for meal: Meals.Meal) async throws -> Meal.Detail?
+    func getMealImage(from url: URL) async throws -> UIImage?
+}
+
+struct MealDataProvider: MealDataService {
     private let apiService: APIService
     private let sharedURLCache: URLCache
     
     init(apiService: APIService = APIService(), cache: URLCache = URLCache.shared) {
         self.apiService = apiService
         self.sharedURLCache = cache
+        sharedURLCache.removeAllCachedResponses()
     }
     
     /// Fetches meal data from a specified API.
@@ -31,7 +38,7 @@ class MealDataCenter {
     /// - Returns: A `Meal.Detail` representing the detailed information of the specified meal, or `nil` if not available.
     func fetchMealDetail(for meal: Meals.Meal) async throws -> Meal.Detail? {
         let baseURL = try apiService.retrieveAPIAddress(from: Constant.MealsManager.resourceFile, basedOn: Constant.MealsManager.detailBaseURLkey)
-        let apiURL = baseURL + meal.idMeal
+        let apiURL = baseURL + meal.id
         let downloadedData = try await apiService.downloadData(from: apiURL)
         let decodedData = try JSONDecoder().decode(Meal.self, from: downloadedData.0)
         if let detail = decodedData.meals.first {

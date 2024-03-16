@@ -13,9 +13,11 @@ struct MealDetail: View {
     @State private var mealDetail: (Meal.Detail?, Error?)
     @State private var image: UIImage?
     @State private var meal: Meals.Meal
+    @State private var isFavorite: Bool
     
-    init(_ meal: Meals.Meal) {
+    init(_ meal: Meals.Meal, _ favorites: [String]) {
         self.meal = meal
+        _isFavorite = State(initialValue: favorites.contains(meal.meal))
     }
 
     var body: some View {
@@ -25,13 +27,29 @@ struct MealDetail: View {
                 RoundedRectangle(cornerRadius: Constant.MealDetail.cornerRadius)
                     .fill(.white.opacity(Constant.MealDetail.roundedRecOpacity))
                 detailContent
+                favoriteButton
+                    .padding(.trailing)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .offset(y: Constant.MealDetail.favoriteButtonYOffset)
             }
             .scrollIndicators(.hidden)
         }
         .ignoresSafeArea(edges: .top)
         .task {
-            mealDetail = await manager.fetchMealDetail(meal)
-            image = await manager.getImage(from: meal.strMealThumb)
+            mealDetail = await manager.fetchMealDetail(for: meal)
+            image = await manager.getImage(from: meal.mealThumb)
+        }
+    }
+    
+    private var favoriteButton: some View {
+        Button {
+            isFavorite.toggle()
+            manager.updateFavoriteRecipes(isAdded: isFavorite, with: meal.meal)
+        } label: {
+            Image(systemName: "heart.circle.fill")
+                .background(Circle().fill(.white).padding(Constant.MealDetail.favoriteButtonBGPadding))
+                .foregroundStyle(isFavorite ? .red : .gray)
+                .font(.system(size: Constant.MealDetail.favoriteButtonSize))
         }
     }
     
@@ -55,7 +73,7 @@ struct MealDetail: View {
     }
     
     private var headingSection: some View {
-        Text(mealDetail.0?.strMeal ?? "")
+        Text(mealDetail.0?.meal ?? "")
             .font(.system(size: Constant.MealDetail.headingSecFontSize, weight: .semibold))
             .padding(.top, Constant.MealDetail.headingSecTopPadding)
     }
@@ -88,7 +106,7 @@ struct MealDetail: View {
         VStack(alignment: .leading, spacing: Constant.MealDetail.instructionsSecSpacing) {
             Text("Instructions")
                 .font(.system(size: Constant.MealDetail.subtitleFontSize, weight: .medium))
-            Text(mealDetail.0?.strInstructions ?? "")
+            Text(mealDetail.0?.instructions ?? "")
         }
         .padding(.horizontal)
     }

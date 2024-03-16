@@ -11,10 +11,14 @@ struct Meals: Codable {
     let meals: [Meal]
     
     struct Meal: Codable, Identifiable, Hashable {
-        let strMeal: String
-        let strMealThumb: String
-        let idMeal: String
+        let meal: String
+        let mealThumb: String
+        let id: String
         
-        var id: String { idMeal }
+        enum CodingKeys: String, CodingKey {
+            case meal = "strMeal"
+            case mealThumb = "strMealThumb"
+            case id = "idMeal"
+        }
     }
 }

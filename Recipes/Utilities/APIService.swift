@@ -7,7 +7,12 @@
 
 import Foundation
 
-class APIService {
+protocol NetworkDataService {
+    func downloadData(from url: String) async throws -> (Data, URLResponse)
+    func retrieveAPIAddress(from resourceFile: String, basedOn key: String) throws -> String
+}
+
+struct APIService: NetworkDataService {
     
     /// Downloads data from a specified URL asynchronously.
     /// - Parameter url: The URL from which to download the data.

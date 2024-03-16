@@ -10,15 +10,10 @@ import SwiftUI
 struct MealList: View {
     @Environment(MealsManager.self) private var manager
     @State private var selectedCategory: CategoryItem = .dessert
-    @State private var mealList: [Meals.Meal] = []
+    @State private var text: String = ""
     
     var currentList: [Meals.Meal] {
-        switch selectedCategory {
-        case .dessert:
-            mealList
-        case .lunch:
-            []
-        }
+        manager.updateMealList(by: selectedCategory, and: text)
     }
     
     var body: some View {
@@ -38,11 +33,15 @@ struct MealList: View {
             .listStyle(.plain)
             .navigationTitle("Category")
             .navigationDestination(for: Meals.Meal.self) { meal in
-                MealDetail(meal)
+                MealDetail(meal, manager.favoriteRecipes)
             }
         }
+        .searchable(text: $text, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by name")
         .task {
-            mealList = await manager.fetchMealData()
+            await manager.fetchMealData()
+        }
+        .onAppear {
+            manager.getFavoriteRecipes()
         }
     }
 }

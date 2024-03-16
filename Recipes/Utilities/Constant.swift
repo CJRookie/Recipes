@@ -38,6 +38,9 @@ struct Constant {
         static let instructionsSecSpacing: CGFloat = 16
         static let subtitleFontSize: CGFloat = 18
         static let imageHeight: CGFloat = 160
+        static let favoriteButtonYOffset: CGFloat = -290
+        static let favoriteButtonBGPadding: CGFloat = 4
+        static let favoriteButtonSize: CGFloat = 40
     }
     
     struct CategoryBar {
@@ -45,7 +48,7 @@ struct Constant {
         static let roundedRecFillColorOpacity: CGFloat = 0.1
         static let frameWidth: CGFloat = 88
         static let frameHeight: CGFloat = 36
-        static let animationDuration: CGFloat = 0.1
+        static let animationDuration: CGFloat = 0.5
         static let vPadding: CGFloat = 4
     }
     

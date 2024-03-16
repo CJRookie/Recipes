@@ -10,25 +10,27 @@ import UIKit
 
 @Observable
 class MealsManager {
-    private let mealDataCenter: MealDataCenter
+    private let mealDataProvider: MealDataProvider
+    private let mealListOperation: MealListOperation
+    private(set) var mealList: [Meals.Meal] = []
+    private(set) var favoriteRecipes: [String] = []
     
-    init(mealDataCenter: MealDataCenter = MealDataCenter()) {
-        self.mealDataCenter = mealDataCenter
+    init(mealDataCenter: MealDataProvider = MealDataProvider(), mealListOperation: MealListOperation = MealListOperation()) {
+        self.mealDataProvider = mealDataCenter
+        self.mealListOperation = mealListOperation
     }
     
-    func fetchMealData() async -> [Meals.Meal] {
+    func fetchMealData() async {
         do {
-            return try await mealDataCenter.fetchMealData()
+            mealList = try await mealDataProvider.fetchMealData()
         } catch {
             print("Error: \(String(describing: error))")
         }
-        
-        return []
     }
     
-    func fetchMealDetail(_ meal: Meals.Meal) async -> (Meal.Detail?, Error?) {
+    func fetchMealDetail(for meal: Meals.Meal) async -> (Meal.Detail?, Error?) {
         do {
-            let detail = try await mealDataCenter.fetchMealDetail(for: meal)
+            let detail = try await mealDataProvider.fetchMealDetail(for: meal)
             return (detail, nil)
         } catch {
             print("Error: \(String(describing: error))")
@@ -39,12 +41,32 @@ class MealsManager {
     func getImage(from url: String) async -> UIImage? {
         do {
             if let url = URL(string: url) {
-                return try await mealDataCenter.getMealImage(from: url)
+                return try await mealDataProvider.getMealImage(from: url)
             }
         } catch {
             print("Error: \(String(describing: error))")
         }
         
         return nil
+    }
+    
+    func updateMealList(by category: CategoryItem, and searchText: String) -> [Meals.Meal] {
+        let filteredBySearchText = mealListOperation.filter(mealList, by: searchText)
+        return mealListOperation.filter(filteredBySearchText, by: category, with: favoriteRecipes)
+    }
+    
+    func getFavoriteRecipes() {
+        favoriteRecipes = UserDefaultCenter.shared.getFavoriteRecipes()
+    }
+    
+    func updateFavoriteRecipes(isAdded: Bool, with recipe: String) {
+        if isAdded {
+            favoriteRecipes.append(recipe)
+            UserDefaultCenter.shared.updateFavoriteRecipe(recipes: favoriteRecipes)
+        } else {
+            favoriteRecipes.removeAll { $0 == recipe }
+            UserDefaultCenter.shared.updateFavoriteRecipe(recipes: favoriteRecipes)
+        }
+        getFavoriteRecipes()
     }
 }

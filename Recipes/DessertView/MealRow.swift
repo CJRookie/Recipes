@@ -19,7 +19,7 @@ struct MealRow: View {
             .overlay {
                 HStack {
                     dessertImage
-                    Text(meal.strMeal)
+                    Text(meal.meal)
                     Spacer()
                     Image(systemName: "chevron.right")
                         .foregroundStyle(.orange.opacity(Constant.MealRow.chevronColorOpacity))
@@ -28,7 +28,7 @@ struct MealRow: View {
             }
             .frame(height: Constant.MealRow.roundedRecHeight)
             .task {
-                image = await manager.getImage(from: meal.strMealThumb) ?? UIImage()
+                image = await manager.getImage(from: meal.mealThumb) ?? UIImage()
             }
     }
     
