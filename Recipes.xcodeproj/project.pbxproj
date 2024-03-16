@@ -11,7 +11,6 @@
 		23033BB32BA0E3DD00E41F5D /* UserDefaultCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23033BB22BA0E3DD00E41F5D /* UserDefaultCenter.swift */; };
 		23033BB52BA1036900E41F5D /* MealListOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23033BB42BA1036900E41F5D /* MealListOperation.swift */; };
 		23033BBC2BA158D400E41F5D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23033BBB2BA158D400E41F5D /* AVFoundation.framework */; };
-		238B9D292BA3F0210082AEC7 /* RecipesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238B9D282BA3F0210082AEC7 /* RecipesTests.swift */; };
 		23B0BE392B9651F4004F43ED /* RecipesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B0BE382B9651F4004F43ED /* RecipesApp.swift */; };
 		23B0BE3B2B9651F4004F43ED /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B0BE3A2B9651F4004F43ED /* ContentView.swift */; };
 		23B0BE3D2B9651F9004F43ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23B0BE3C2B9651F9004F43ED /* Assets.xcassets */; };
@@ -46,7 +45,6 @@
 		23033BB42BA1036900E41F5D /* MealListOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealListOperation.swift; sourceTree = "<group>"; };
 		23033BBB2BA158D400E41F5D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		238B9D262BA3F0200082AEC7 /* RecipesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		238B9D282BA3F0210082AEC7 /* RecipesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesTests.swift; sourceTree = "<group>"; };
 		23B0BE352B9651F4004F43ED /* Recipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23B0BE382B9651F4004F43ED /* RecipesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesApp.swift; sourceTree = "<group>"; };
 		23B0BE3A2B9651F4004F43ED /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -93,19 +91,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		238B9D272BA3F0200082AEC7 /* RecipesTests */ = {
-			isa = PBXGroup;
-			children = (
-				238B9D282BA3F0210082AEC7 /* RecipesTests.swift */,
-			);
-			path = RecipesTests;
-			sourceTree = "<group>";
-		};
 		23B0BE2C2B9651F4004F43ED = {
 			isa = PBXGroup;
 			children = (
 				23B0BE372B9651F4004F43ED /* Recipes */,
-				238B9D272BA3F0200082AEC7 /* RecipesTests */,
 				23B0BE362B9651F4004F43ED /* Products */,
 				23033BBA2BA158D400E41F5D /* Frameworks */,
 			);
@@ -303,7 +292,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				238B9D292BA3F0210082AEC7 /* RecipesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
