@@ -7,12 +7,12 @@
 
 import Foundation
 
-enum APIServiceError: Error {
+enum NetworkDataServiceError: Error {
     case invalidURL
     case invalidHTTPResponse
 }
 
-extension APIServiceError: LocalizedError {
+extension NetworkDataServiceError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
@@ -23,21 +23,18 @@ extension APIServiceError: LocalizedError {
     }
 }
 
-enum ConfigurationError: Error {
+enum BundleDataServiceError: Error {
     case missingFile
-    case invalidFormat(String)
-    case missingApiAddress
+    case missingURL
 }
 
-extension ConfigurationError: LocalizedError {
+extension BundleDataServiceError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .missingFile:
             NSLocalizedString("Error: Missing Config.plist file.", comment: "missingFile")
-        case .invalidFormat(let path):
-            NSLocalizedString("Error: Unable to read the configuration file at path \(path)", comment: "invalidFormat")
-        case .missingApiAddress:
-            NSLocalizedString("Error: Missing Dessert API address in the configuration file.", comment: "missingApiAddress")
+        case .missingURL:
+            NSLocalizedString("Error: Missing Dessert API address in the configuration file.", comment: "missingURL")
         }
     }
 }
