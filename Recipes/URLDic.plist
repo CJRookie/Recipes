@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Categories_URL</key>
+	<string>https://www.themealdb.com/api/json/v1/1/categories.php</string>
+	<key>Category_Base_URL</key>
+	<string>https://themealdb.com/api/json/v1/1/filter.php?c=</string>
+	<key>Detail Base URL</key>
+	<string>https://themealdb.com/api/json/v1/1/lookup.php?i=</string>
+</dict>
+</plist>
