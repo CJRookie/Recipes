@@ -6,7 +6,7 @@
 	<string>https://www.themealdb.com/api/json/v1/1/categories.php</string>
 	<key>Category_Base_URL</key>
 	<string>https://themealdb.com/api/json/v1/1/filter.php?c=</string>
-	<key>Detail Base URL</key>
+	<key>Detail_Base_URL</key>
 	<string>https://themealdb.com/api/json/v1/1/lookup.php?i=</string>
 </dict>
 </plist>
