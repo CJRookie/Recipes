@@ -28,7 +28,7 @@ final class RecipeDataRetrieverTests: XCTestCase {
     
     func testDownloadData_Success() async throws {
         let expectation = XCTestExpectation(description: "Download data successful")
-        let url = "https://example.com"
+        let url = URL(string: "https://example.com")!
         let mockData = """
         {
         "categories":[{"idCategory":"1","strCategory":"Beef"}]
@@ -36,7 +36,7 @@ final class RecipeDataRetrieverTests: XCTestCase {
         """
         let data = mockData.data(using: .utf8)!
         MockURLProtocol.requestHandler = { request in
-            let response = HTTPURLResponse(url: URL(string: url)!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
             return (response, data)
         }
         
@@ -53,7 +53,7 @@ final class RecipeDataRetrieverTests: XCTestCase {
     
     func testDownloadData_Failure_InvalidHTTPResponse() async throws {
         let expectation = XCTestExpectation(description: "Invalid HTTP response failure")
-        let url = "https://example.com"
+        let url = URL(string: "https://example.com")!
         let mockData = """
         {
         "categories":[{"idCategory":"1","strCategory":"Beef"}]
@@ -61,7 +61,7 @@ final class RecipeDataRetrieverTests: XCTestCase {
         """
         let data = mockData.data(using: .utf8)!
         MockURLProtocol.requestHandler = { request in
-            let response = HTTPURLResponse(url: URL(string: url)!, statusCode: 400, httpVersion: nil, headerFields: nil)!
+            let response = HTTPURLResponse(url: url, statusCode: 400, httpVersion: nil, headerFields: nil)!
             return (response, data)
         }
         
@@ -77,12 +77,12 @@ final class RecipeDataRetrieverTests: XCTestCase {
     
     func testFetchData_Success() async throws {
         let expectation = XCTestExpectation(description: "Fetch data successful")
-        let url = "https://example.com"
-        let mockData = Categories(categories: [Category(id: "1", category: "Beef", categoryThumb: "http://beef.com")])
+        let url = URL(string: "https://example.com")!
+        let mockData = Categories(categories: [Category(id: "1", name: "Beef", thumb: "http://beef.com")])
         let data = try JSONEncoder().encode(mockData)
         
         MockURLProtocol.requestHandler = { request in
-            let response = HTTPURLResponse(url: URL(string: url)!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
             return (response, data)
         }
         
