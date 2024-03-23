@@ -1,0 +1,34 @@
+//
+//  CategoryManager.swift
+//  Recipes
+//
+//  Created by CJ on 3/17/24.
+//
+
+import Foundation
+
+@Observable
+class CategoryManager {
+    private(set) var categories: [Category] = []
+    private let dataRetriever: NetworkDataService
+    private let urlRetriever: BundleDataService
+    var error: Error?
+    
+    init(dataRetriever: NetworkDataService = RecipeDataRetriever(), urlRetriever: BundleDataService = RecipeDataURLRetriever()) {
+        self.dataRetriever = dataRetriever
+        self.urlRetriever = urlRetriever
+    }
+    
+    /// Fetches categories data from a url.
+    func fetchCategories() async {
+        do {
+            let strURL = try urlRetriever.retrieveDownloadURL(from: Constant.Configure.resourceFile, basedOn: Constant.Configure.categoriesURLKey)
+            if let url = URL(string: strURL) {
+                let decodedData: Categories = try await dataRetriever.fetch(from: url)
+                categories = decodedData.categories
+            }
+        } catch {
+            self.error = error
+        }
+    }
+}
