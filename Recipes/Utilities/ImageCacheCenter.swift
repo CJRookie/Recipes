@@ -1,5 +1,5 @@
 //
-//  ImageCache.swift
+//  ImageCacheCenter.swift
 //  Recipes
 //
 //  Created by CJ on 3/19/24.
@@ -8,10 +8,12 @@
 import Foundation
 import UIKit
 
-struct ImageCache {
+@Observable
+class ImageCacheCenter {
     private let sharedURLCache: URLCache
     private let networkDataRetriever: NetworkDataService
     private let maxMemoryCacheSize: Int = 100 * 1024 * 1024
+    var error: Error?
     
     init(sharedURLCache: URLCache = .shared, networkDataRetriever: NetworkDataService = RecipeDataRetriever()) {
         self.sharedURLCache = sharedURLCache
@@ -23,12 +25,17 @@ struct ImageCache {
     /// Retrieves a meal image from the specified URL.
     /// - Parameter url: The URL from which to retrieve/fetch the meal image.
     /// - Returns: A `UIImage` representing the fetched meal image, or `nil` if the image is not available.
-    func getRecipeImage(from url: URL) async throws -> UIImage? {
+    func getRecipeImage(from url: URL) async -> UIImage? {
         let request = URLRequest(url: url)
         if let cachedData = sharedURLCache.cachedResponse(for: request)?.data, let image = UIImage(data: cachedData) {
             return image
         } else {
-            return try await fetchRecipeImage(from: url)
+            do {
+                return try await fetchRecipeImage(from: url)
+            } catch {
+                self.error = error
+                return nil
+            }
         }
     }
     
@@ -36,7 +43,7 @@ struct ImageCache {
     /// - Parameter url: The URL from which to fetch the meal image.
     /// - Returns: A `UIImage` representing the fetched meal image, or `nil` if the image is not available.
     private func fetchRecipeImage(from url: URL) async throws -> UIImage? {
-        let downloadedData = try await networkDataRetriever.downloadData(from: url.absoluteString)
+        let downloadedData = try await networkDataRetriever.downloadData(from: url)
         let image = UIImage(data: downloadedData.0)
         cacheRecipeImage(from: url, response: downloadedData.1, data: downloadedData.0)
         return image
