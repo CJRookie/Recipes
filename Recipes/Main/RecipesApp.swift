@@ -9,12 +9,14 @@ import SwiftUI
 
 @main
 struct RecipesApp: App {
-    @State private var mealsManager = MealsManager()
+    @State private var categoryManager = CategoryManager()
+    @State private var imageCache = ImageCacheCenter()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(mealsManager)
+                .environment(categoryManager)
+                .environment(imageCache)
         }
     }
 }
