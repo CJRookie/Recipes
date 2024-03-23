@@ -9,13 +9,9 @@ import Foundation
 
 struct Constant {
     struct MealRow {
-        static let roundedRecCornerRadius: CGFloat = 8
         static let shadowOpacity: CGFloat = 0.3
-        static let shadowRadius: CGFloat = 2
-        static let shadowOffset: CGFloat = 1
         static let roundedRecHeight: CGFloat = 96
         static let chevronColorOpacity: CGFloat = 0.8
-        static let imageSize: CGFloat = 88
         static let overlayPadding: CGFloat = 8
     }
     
@@ -50,13 +46,6 @@ struct Constant {
         static let frameHeight: CGFloat = 36
         static let animationDuration: CGFloat = 0.5
         static let vPadding: CGFloat = 4
-    }
-    
-    struct MealsManager {
-        static let resourceFile = "URLDic"
-        static let categoriesURLKey = "Categories_URL"
-        static let categoryBaseURLKey = "Category_Base_URL"
-        static let detailBaseURLkey = "Detail_Base_URL"
     }
     
     struct Configure {
