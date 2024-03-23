@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selection: Tab = .home
+    @State private var selection: Tab = .category
     
     enum Tab: String {
-        case home
+        case category
+        case favorite
         
         var title: String {
             rawValue.capitalized
@@ -20,11 +21,16 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $selection) {
-            MealList()
+            CategoryGallery()
                 .tabItem {
-                    Label(Tab.home.title, systemImage: "house")
+                    Image(systemName: "waveform")
                 }
-                .tag(Tab.home)
+                .tag(Tab.category)
+            FavoriteList()
+                .tabItem {
+                    Image(systemName: "heart.fill")
+                }
+                .tag(Tab.favorite)
         }
         
     }
