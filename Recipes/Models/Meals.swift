@@ -9,16 +9,16 @@ import Foundation
 
 struct Meals: Codable {
     let meals: [Meal]
+}
+
+struct Meal: Codable, Identifiable, Hashable {
+    let name: String
+    let thumb: String
+    let id: String
     
-    struct Meal: Codable, Identifiable, Hashable {
-        let meal: String
-        let mealThumb: String
-        let id: String
-        
-        enum CodingKeys: String, CodingKey {
-            case meal = "strMeal"
-            case mealThumb = "strMealThumb"
-            case id = "idMeal"
-        }
+    enum CodingKeys: String, CodingKey {
+        case name = "strMeal"
+        case thumb = "strMealThumb"
+        case id = "idMeal"
     }
 }
