@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct FavoriteList: View {
+    @Environment(FavoriteListManager.self) private var manager
     
     var body: some View {
-        Text("Hello")
+        List(manager.favoriteRecipes, id: \.self) { recipe in
+            Text(recipe)
+        }
+        .listStyle(.plain)
     }
 }

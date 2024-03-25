@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(FavoriteListManager.self) private var manager
     @State private var selection: Tab = .category
     
     enum Tab: String {
@@ -32,6 +33,8 @@ struct ContentView: View {
                 }
                 .tag(Tab.favorite)
         }
-        
+        .task {
+            manager.getFavoriteRecipes()
+        }
     }
 }
