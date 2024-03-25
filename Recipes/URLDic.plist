@@ -8,5 +8,7 @@
 	<string>https://themealdb.com/api/json/v1/1/filter.php?c=</string>
 	<key>Detail_Base_URL</key>
 	<string>https://themealdb.com/api/json/v1/1/lookup.php?i=</string>
+	<key>Ingredient_Image_Base_URL</key>
+	<string>https://themealdb.com/images/ingredients/</string>
 </dict>
 </plist>
