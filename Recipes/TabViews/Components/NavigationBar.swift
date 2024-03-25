@@ -8,28 +8,27 @@
 import SwiftUI
 
 struct NavigationBar: View {
-    @Environment(CategoryManager.self) private var manager
-    @Binding var selectedItem: Category
+    @Binding var selectedComponent: RecipeComponent
     @Namespace private var namespace
     
     var body: some View {
         ScrollView(.horizontal) {
             HStack(alignment: .top) {
-                ForEach(manager.categories) { category in
+                ForEach(RecipeComponent.allCases) { component in
                     ZStack {
-                        if selectedItem == category {
-                            RoundedRectangle(cornerRadius: Constant.CategoryBar.roundedRecCornerRadius)
-                                .fill(.orange.opacity(Constant.CategoryBar.roundedRecFillColorOpacity))
+                        if selectedComponent == component {
+                            RoundedRectangle(cornerRadius: Constant.NavigationBar.roundedRecCornerRadius)
+                                .fill(.orange.opacity(Constant.NavigationBar.roundedRecFillColorOpacity))
                                 .matchedGeometryEffect(id: "cate_bg", in: namespace)
                         }
-                        Text(category.name)
+                        Text(component.title)
                             .font(.headline)
                             .foregroundStyle(.black)
                     }
-                    .frame(width: Constant.CategoryBar.frameWidth, height: Constant.CategoryBar.frameHeight)
+                    .frame(width: Constant.NavigationBar.frameWidth, height: Constant.NavigationBar.frameHeight)
                     .onTapGesture {
-                        withAnimation(.smooth(duration: Constant.CategoryBar.animationDuration)) {
-                            selectedItem = category
+                        withAnimation(.smooth(duration: Constant.NavigationBar.animationDuration)) {
+                            selectedComponent = component
                         }
                     }
                 }
@@ -37,6 +36,19 @@ struct NavigationBar: View {
             .padding(.leading)
         }
         .scrollIndicators(.hidden)
-        .padding(.vertical, Constant.CategoryBar.vPadding)
+        .padding(.vertical, Constant.NavigationBar.vPadding)
+    }
+}
+
+enum RecipeComponent: String, CaseIterable, Identifiable {
+    case ingredients
+    case instructions
+    
+    var title: String {
+        rawValue.capitalized
+    }
+    
+    var id: String {
+        title
     }
 }
