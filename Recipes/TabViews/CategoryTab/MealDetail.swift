@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct MealDetail: View {
-    @Environment(ImageCacheCenter.self) private var imageCache
+    @Environment(FavoriteListManager.self) private var favoriteListManager
     @State private var manager: MealDetailManager = MealDetailManager()
     @State private var themes: [Color] = [Color.green, Color.orange, Color.blue, Color.pink, Color.yellow, Color.purple]
-    let meal: Meal
     @State private var image: UIImage?
-    @State private var isFavorite: Bool = false
+    @State private var isFavorite: Bool
+    @State private var selectedRecipeComponent: RecipeComponent = .ingredients
+    let meal: Meal
     
-    init(meal: Meal) {
+    init(meal: Meal, favorites: [String]) {
         self.meal = meal
-//        _isFavorite = State(initialValue: manager.favoriteRecipes.contains(meal.name))
+        _isFavorite = State(initialValue: favorites.contains(meal.name))
     }
 
     var body: some View {
@@ -31,18 +32,22 @@ struct MealDetail: View {
             .scrollIndicators(.hidden)
         }
         .ignoresSafeArea(edges: .top)
-        .task {
-            await manager.fetchMealDetail(for: meal)
-            if let url = URL(string: meal.thumb) {
-                image = await imageCache.getRecipeImage(from: url)
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                BackButton()
             }
+        }
+        .task {
+            await manager.fetchDetail(for: meal.id)
+            image = await ImageCacheCenter.shared.getImage(from: meal.thumb)
         }
     }
     
     private var favoriteButton: some View {
         Button {
             isFavorite.toggle()
-//            manager.updateFavoriteRecipes(isAdded: isFavorite, with: meal.name)
+            favoriteListManager.updateFavoriteRecipes(isAdded: isFavorite, with: meal.name)
         } label: {
             Image(systemName: "heart.circle.fill")
                 .background(Circle().fill(.white).padding(Constant.MealDetail.favoriteButtonBGPadding))
@@ -58,8 +63,13 @@ struct MealDetail: View {
                 ScrollView {
                     VStack(spacing: Constant.MealDetail.mainContentVStackSpacing) {
                         headingSection
-                        ingredientsSection
-                        instructionsSection
+                        NavigationBar(selectedComponent: $selectedRecipeComponent)
+                        switch selectedRecipeComponent {
+                        case .instructions:
+                            instructionsSection
+                        case .ingredients:
+                            ingredientsSection
+                        }
                     }
                 }
                 .padding(.bottom)
@@ -84,35 +94,25 @@ struct MealDetail: View {
 
     private var ingredientsSection: some View {
         VStack {
-            HStack(alignment: .lastTextBaseline) {
-                Text("Ingredients")
-                    .font(.system(size: Constant.MealDetail.subtitleFontSize, weight: .medium))
-                Spacer()
-                Text("\(manager.detail.0?.strIngredients.count ?? 0) Item(s)")
+            HStack {
+                Text("\(manager.detail.0?.ingredients.count ?? 0) Item(s)")
                     .foregroundStyle(.gray)
+                Spacer()
             }
-            .padding(.horizontal)
-
-            ScrollView(.horizontal) {
-                HStack {
-                    ForEach(0..<(manager.detail.0?.strIngredients.count ?? 0), id: \.self) { index in
-                        if let ingredient = manager.detail.0?.strIngredients[index], let measure = manager.detail.0?.strMeasures[index] {
-                            IngredientCard(ingredient: ingredient, measure: measure, theme: themes[index % themes.count])
-                        }
+            VStack(spacing: 0) {
+                ForEach(0..<(manager.detail.0?.ingredients.count ?? 0), id: \.self) { index in
+                    if let ingredient = manager.detail.0?.ingredients[index], let measure = manager.detail.0?.measures[index] {
+                        IngredientRow(manager: manager, ingredient: ingredient, measure: measure, theme: themes[index % themes.count])
                     }
                 }
-                .padding(.leading)
             }
         }
+        .padding(.horizontal)
     }
 
     private var instructionsSection: some View {
-        VStack(alignment: .leading, spacing: Constant.MealDetail.instructionsSecSpacing) {
-            Text("Instructions")
-                .font(.system(size: Constant.MealDetail.subtitleFontSize, weight: .medium))
-            Text(manager.detail.0?.instructions ?? "")
-        }
-        .padding(.horizontal)
+        Text(manager.detail.0?.instructions ?? "")
+            .padding(.horizontal)
     }
 
     private var dessertImage: some View {
