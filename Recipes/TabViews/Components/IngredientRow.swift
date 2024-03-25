@@ -17,14 +17,14 @@ struct IngredientRow: View {
     var body: some View {
         HStack {
             ingredientImage
-                .padding(.vertical, 4)
+                .padding(.vertical, Constant.IngredientRow.imagePadding)
             Text(ingredient)
             Spacer()
             Text(measure)
         }
         .padding(.horizontal)
-        .frame(height: 48)
-        .background(RoundedRectangle(cornerRadius: 8).fill(theme.opacity(0.1)))
+        .frame(height: Constant.IngredientRow.rowHeight)
+        .background(RoundedRectangle(cornerRadius: Constant.IngredientRow.cornerRadius).fill(theme.opacity(Constant.IngredientRow.themeOpacity)))
         .task {
             image = await manager.fetchIngredientImage(ingredient)
         }
