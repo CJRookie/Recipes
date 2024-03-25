@@ -23,8 +23,8 @@ class ImageCacheCenter {
     init(sharedURLCache: URLCache, networkDataRetriever: NetworkDataService) {
         self.sharedURLCache = sharedURLCache
         self.networkDataRetriever = networkDataRetriever
-        sharedURLCache.diskCapacity = 0
-        sharedURLCache.memoryCapacity = maxMemoryCacheSize
+        self.sharedURLCache.diskCapacity = 0
+        self.sharedURLCache.memoryCapacity = maxMemoryCacheSize
     }
     
     /// Retrieves a meal image from the specified URL.
