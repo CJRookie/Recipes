@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct MealRow: View {
-    @Environment(ImageCacheCenter.self) private var imageCache
-    @State private var image = UIImage()
+    @State private var image: UIImage?
     let meal: Meal
     
     var body: some View {
@@ -23,14 +22,12 @@ struct MealRow: View {
         .padding(Constant.MealRow.overlayPadding)
         .glowRoundedRect(rectHeight: Constant.MealRow.roundedRecHeight, glowColor: .gray.opacity(Constant.MealRow.shadowOpacity))
         .task {
-            if let url = URL(string: meal.thumb) {
-                image = await imageCache.getRecipeImage(from: url) ?? UIImage()
-            }
+            image = await ImageCacheCenter.shared.getImage(from: meal.thumb) ?? UIImage()
         }
     }
     
     private var dessertImage: some View {
-        Image(uiImage: image)
+        Image(uiImage: image ?? UIImage())
             .resizable()
             .scaledToFit()
             .clipShape(.buttonBorder)
