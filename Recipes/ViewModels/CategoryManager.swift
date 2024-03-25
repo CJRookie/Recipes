@@ -9,9 +9,9 @@ import Foundation
 
 @Observable
 class CategoryManager {
-    private(set) var categories: [Category] = []
     private let dataRetriever: NetworkDataService
     private let urlRetriever: BundleDataService
+    private(set) var categories: [Category] = []
     var error: Error?
     
     init(dataRetriever: NetworkDataService = RecipeDataRetriever(), urlRetriever: BundleDataService = RecipeDataURLRetriever()) {
@@ -19,7 +19,7 @@ class CategoryManager {
         self.urlRetriever = urlRetriever
     }
     
-    /// Fetches categories data from a url.
+    /// Fetches meal categories.
     func fetchCategories() async {
         do {
             let strURL = try urlRetriever.retrieveDownloadURL(from: Constant.Configure.resourceFile, basedOn: Constant.Configure.categoriesURLKey)
