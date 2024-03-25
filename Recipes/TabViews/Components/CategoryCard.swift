@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct CategoryCard: View {
-    @Environment(ImageCacheCenter.self) private var imageCache
     let category: Category
     @State private var image: UIImage?
     
@@ -26,9 +25,7 @@ struct CategoryCard: View {
         }
         .glowRoundedRect(rectHeight: 100, glowColor: .gray.opacity(0.8))
         .task {
-            if let url = URL(string: category.thumb) {
-                image = await imageCache.getRecipeImage(from: url)
-            }
+            image = await ImageCacheCenter.shared.getImage(from: category.thumb)
         }
     }
 }
