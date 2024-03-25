@@ -11,11 +11,18 @@ import UIKit
 @Observable
 class ImageCacheCenter {
     static let shared = ImageCacheCenter()
-    private let sharedURLCache: URLCache = .shared
-    private let networkDataRetriever: NetworkDataService = RecipeDataRetriever()
+    private var sharedURLCache: URLCache = .shared
+    private var networkDataRetriever: NetworkDataService = RecipeDataRetriever()
     private let maxMemoryCacheSize: Int = 100 * 1024 * 1024
     
     private init() {
+        sharedURLCache.diskCapacity = 0
+        sharedURLCache.memoryCapacity = maxMemoryCacheSize
+    }
+    
+    init(sharedURLCache: URLCache, networkDataRetriever: NetworkDataService) {
+        self.sharedURLCache = sharedURLCache
+        self.networkDataRetriever = networkDataRetriever
         sharedURLCache.diskCapacity = 0
         sharedURLCache.memoryCapacity = maxMemoryCacheSize
     }
