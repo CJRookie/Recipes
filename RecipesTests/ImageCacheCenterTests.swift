@@ -26,10 +26,10 @@ final class ImageCacheCenterTests: XCTestCase {
     }
     
     func testGetRecipeImage_FetchFromURL() async throws {
-        let url = URL(string: "http://example.com")!
+        let url = "http://example.com"
         let expectation = XCTestExpectation(description: "Fetch image from a URL")
         
-        let result = try await imageCache.getRecipeImage(from: url)
+        let result = await imageCache.getImage(from: url)
         XCTAssertNotNil(result)
         expectation.fulfill()
         
@@ -37,7 +37,8 @@ final class ImageCacheCenterTests: XCTestCase {
     }
     
     func testGetRecipeImage_FetchFromCache() async throws {
-        let url = URL(string: "http://example.com")!
+        let strURL = "http://example.com"
+        let url = URL(string: strURL)!
         let expectation = XCTestExpectation(description: "Fetch image from cache")
         let imageData = UIImage(systemName: "photo")!.pngData()!
         let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
@@ -46,7 +47,7 @@ final class ImageCacheCenterTests: XCTestCase {
         mockURLCache.storeCachedResponse(cachedResponse, for: request)
         imageCache = ImageCacheCenter(sharedURLCache: mockURLCache, networkDataRetriever: RecipeDataRetriever())
         
-        let result = try await imageCache.getRecipeImage(from: url)
+        let result = await imageCache.getImage(from: strURL)
         XCTAssertNotNil(result)
         expectation.fulfill()
         
