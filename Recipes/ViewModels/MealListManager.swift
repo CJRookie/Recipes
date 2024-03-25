@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 @Observable
 class MealListManager {
@@ -21,7 +20,8 @@ class MealListManager {
     }
     
     /// Fetches meal data for a specific category.
-    func fetchMealData(for category: String) async {
+    /// - Parameter category: The category of meals to fetch
+    func fetchMeals(in category: String) async {
         do {
             let baseURL = try urlRetriever.retrieveDownloadURL(from: Constant.Configure.resourceFile, basedOn: Constant.Configure.categoryBaseURLKey)
             let mealListURL = baseURL + category

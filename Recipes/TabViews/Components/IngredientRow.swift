@@ -1,5 +1,5 @@
 //
-//  IngredientCard.swift
+//  IngredientRow.swift
 //  Recipes
 //
 //  Created by CJ on 3/5/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct IngredientCard: View {
+struct IngredientRow: View {
     let ingredient: String
     let measure: String
     let theme: Color
