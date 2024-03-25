@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MealList: View {
+    @Environment(FavoriteListManager.self) private var favoriteListManager
     @State private var manager = MealListManager()
     @State private var text: String = ""
     let category: String
@@ -31,11 +32,11 @@ struct MealList: View {
         .navigationTitle(category)
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: Meal.self) { meal in
-            MealDetail(meal: meal)
+            MealDetail(meal: meal, favorites: favoriteListManager.favoriteRecipes)
         }
         .searchable(text: $text, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by name")
         .task {
-            await manager.fetchMealData(for: category)
+            await manager.fetchMeals(in: category)
         }
     }
 }
