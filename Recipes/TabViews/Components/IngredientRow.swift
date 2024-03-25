@@ -8,26 +8,32 @@
 import SwiftUI
 
 struct IngredientRow: View {
+    @State private var image: UIImage?
+    var manager: MealDetailManager
     let ingredient: String
     let measure: String
     let theme: Color
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: Constant.IngredientCard.cornerRadius)
-                .fill(theme.opacity(Constant.IngredientCard.themeOpacity))
-            VStack(spacing: 0) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: Constant.IngredientCard.cornerRadius)
-                        .fill(theme.opacity(Constant.IngredientCard.themeOpacity))
-                    Text(ingredient)
-                        .lineLimit(Constant.IngredientCard.textLineLimit)
-                }
-                Text(measure)
-                    .padding(.vertical, Constant.IngredientCard.measureVPadding)
-            }
+        HStack {
+            ingredientImage
+                .padding(.vertical, 4)
+            Text(ingredient)
+            Spacer()
+            Text(measure)
         }
-        .frame(width: Constant.IngredientCard.size, height: Constant.IngredientCard.size)
-        .padding(.trailing, Constant.IngredientCard.trailingPadding)
+        .padding(.horizontal)
+        .frame(height: 48)
+        .background(RoundedRectangle(cornerRadius: 8).fill(theme.opacity(0.1)))
+        .task {
+            image = await manager.fetchIngredientImage(ingredient)
+        }
+    }
+    
+    private var ingredientImage: some View {
+        Image(uiImage: image ?? UIImage())
+            .resizable()
+            .scaledToFit()
+            .clipShape(.buttonBorder)
     }
 }
