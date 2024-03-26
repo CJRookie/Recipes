@@ -15,7 +15,7 @@ final class ImageCacheCenterTests: XCTestCase {
 
     override func setUpWithError() throws {
         mockNetworkDataRetriever = MockNetworkDataService()
-        mockURLCache = URLCache()
+        mockURLCache = URLCache(memoryCapacity: 100 * 1024 * 1024, diskCapacity: 0)
         imageCache = ImageCacheCenter(sharedURLCache: mockURLCache, networkDataRetriever: mockNetworkDataRetriever)
     }
 
