@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ListTemplate: View {
+    @Environment(FavoriteListManager.self) private var manager
     @State private var text: String = ""
     let list: [Meal]
     let navTitle: String
@@ -31,7 +32,7 @@ struct ListTemplate: View {
         .navigationTitle(navTitle)
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: Meal.self) { meal in
-            MealDetail(meal: meal)
+            MealDetail(meal: meal, favorites: manager.recipes)
         }
         .searchable(text: $text, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by name")
     }

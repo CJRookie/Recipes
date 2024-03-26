@@ -8,14 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		23032AAE2B9B897600B3E5B7 /* MealDetailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23032AAD2B9B897600B3E5B7 /* MealDetailManager.swift */; };
-		23033BB32BA0E3DD00E41F5D /* UserDefaultCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23033BB22BA0E3DD00E41F5D /* UserDefaultCenter.swift */; };
 		23033BB52BA1036900E41F5D /* MealListOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23033BB42BA1036900E41F5D /* MealListOperation.swift */; };
 		23033BBC2BA158D400E41F5D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23033BBB2BA158D400E41F5D /* AVFoundation.framework */; };
 		2367BCD32BAE91B700D77724 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2367BCD22BAE91B700D77724 /* Styles.swift */; };
-		2367BCD62BAF58CE00D77724 /* FavoriteListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2367BCD52BAF58CE00D77724 /* FavoriteListManager.swift */; };
 		2367BCD82BAFD77F00D77724 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2367BCD72BAFD77E00D77724 /* NavigationBar.swift */; };
+		237438D42BB3192F00937DF0 /* ListTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237438D32BB3192F00937DF0 /* ListTemplate.swift */; };
+		237438D62BB3438C00937DF0 /* FavoriteListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237438D52BB3438C00937DF0 /* FavoriteListManager.swift */; };
 		23A4CC7F2BB11D5A0001B773 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4CC7E2BB11D5A0001B773 /* BackButton.swift */; };
-		23A4CC812BB133480001B773 /* MealModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4CC802BB133480001B773 /* MealModel.swift */; };
 		23B0BE392B9651F4004F43ED /* RecipesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B0BE382B9651F4004F43ED /* RecipesApp.swift */; };
 		23B0BE3B2B9651F4004F43ED /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B0BE3A2B9651F4004F43ED /* ContentView.swift */; };
 		23B0BE3D2B9651F9004F43ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23B0BE3C2B9651F9004F43ED /* Assets.xcassets */; };
@@ -56,14 +55,13 @@
 
 /* Begin PBXFileReference section */
 		23032AAD2B9B897600B3E5B7 /* MealDetailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailManager.swift; sourceTree = "<group>"; };
-		23033BB22BA0E3DD00E41F5D /* UserDefaultCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultCenter.swift; sourceTree = "<group>"; };
 		23033BB42BA1036900E41F5D /* MealListOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealListOperation.swift; sourceTree = "<group>"; };
 		23033BBB2BA158D400E41F5D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		2367BCD22BAE91B700D77724 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
-		2367BCD52BAF58CE00D77724 /* FavoriteListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListManager.swift; sourceTree = "<group>"; };
 		2367BCD72BAFD77E00D77724 /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
+		237438D32BB3192F00937DF0 /* ListTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTemplate.swift; sourceTree = "<group>"; };
+		237438D52BB3438C00937DF0 /* FavoriteListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListManager.swift; sourceTree = "<group>"; };
 		23A4CC7E2BB11D5A0001B773 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
-		23A4CC802BB133480001B773 /* MealModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealModel.swift; sourceTree = "<group>"; };
 		23B0BE352B9651F4004F43ED /* Recipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23B0BE382B9651F4004F43ED /* RecipesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesApp.swift; sourceTree = "<group>"; };
 		23B0BE3A2B9651F4004F43ED /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -125,9 +123,12 @@
 			isa = PBXGroup;
 			children = (
 				23DF5EE12BACA0E4004495B1 /* CategoryGallery.swift */,
+				23DF5EE32BACB032004495B1 /* CategoryCard.swift */,
 				23B0BE4C2B9659D2004F43ED /* MealList.swift */,
-				23B0BE572B9691B5004F43ED /* MealDetail.swift */,
 				23B0BE502B9670F9004F43ED /* MealRow.swift */,
+				237438D32BB3192F00937DF0 /* ListTemplate.swift */,
+				23B0BE572B9691B5004F43ED /* MealDetail.swift */,
+				23B0BE612B979BFC004F43ED /* IngredientRow.swift */,
 			);
 			path = CategoryTab;
 			sourceTree = "<group>";
@@ -188,7 +189,6 @@
 				23B0BE462B9653B5004F43ED /* Meals.swift */,
 				23B0BE5B2B96CD7B004F43ED /* MealDetails.swift */,
 				23DF5EC32BA7EC2C004495B1 /* Categories.swift */,
-				23A4CC802BB133480001B773 /* MealModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -209,7 +209,6 @@
 				23B0BE4A2B9654B7004F43ED /* RecipeDataRetriever.swift */,
 				23DF5EDA2BAB2574004495B1 /* RecipeDataURLRetriever.swift */,
 				23DF5ED62BAA80A2004495B1 /* ImageCacheCenter.swift */,
-				23033BB22BA0E3DD00E41F5D /* UserDefaultCenter.swift */,
 				23033BB42BA1036900E41F5D /* MealListOperation.swift */,
 				23B0BE5D2B96E7B0004F43ED /* Constant.swift */,
 				23B0BE5F2B96E7EE004F43ED /* ErrorCenter.swift */,
@@ -223,8 +222,8 @@
 			children = (
 				23DF5EC52BA7EE50004495B1 /* CategoryManager.swift */,
 				23B0BE482B965453004F43ED /* MealListManager.swift */,
+				237438D52BB3438C00937DF0 /* FavoriteListManager.swift */,
 				23032AAD2B9B897600B3E5B7 /* MealDetailManager.swift */,
-				2367BCD52BAF58CE00D77724 /* FavoriteListManager.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -233,8 +232,6 @@
 			isa = PBXGroup;
 			children = (
 				2367BCD72BAFD77E00D77724 /* NavigationBar.swift */,
-				23B0BE612B979BFC004F43ED /* IngredientRow.swift */,
-				23DF5EE32BACB032004495B1 /* CategoryCard.swift */,
 				23A4CC7E2BB11D5A0001B773 /* BackButton.swift */,
 			);
 			path = Components;
@@ -361,7 +358,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2367BCD62BAF58CE00D77724 /* FavoriteListManager.swift in Sources */,
 				23B0BE622B979BFC004F43ED /* IngredientRow.swift in Sources */,
 				23B0BE3B2B9651F4004F43ED /* ContentView.swift in Sources */,
 				23B0BE582B9691B5004F43ED /* MealDetail.swift in Sources */,
@@ -373,11 +369,10 @@
 				23B0BE512B9670F9004F43ED /* MealRow.swift in Sources */,
 				23DF5EE02BAC9659004495B1 /* FavoriteList.swift in Sources */,
 				23B0BE472B9653B5004F43ED /* Meals.swift in Sources */,
+				237438D62BB3438C00937DF0 /* FavoriteListManager.swift in Sources */,
 				23DF5ED72BAA80A2004495B1 /* ImageCacheCenter.swift in Sources */,
 				23DF5EE22BACA0E4004495B1 /* CategoryGallery.swift in Sources */,
 				23B0BE602B96E7EE004F43ED /* ErrorCenter.swift in Sources */,
-				23033BB32BA0E3DD00E41F5D /* UserDefaultCenter.swift in Sources */,
-				23A4CC812BB133480001B773 /* MealModel.swift in Sources */,
 				23DF5EC62BA7EE50004495B1 /* CategoryManager.swift in Sources */,
 				23032AAE2B9B897600B3E5B7 /* MealDetailManager.swift in Sources */,
 				23DF5EE42BACB032004495B1 /* CategoryCard.swift in Sources */,
@@ -386,6 +381,7 @@
 				23B0BE5E2B96E7B0004F43ED /* Constant.swift in Sources */,
 				23B0BE392B9651F4004F43ED /* RecipesApp.swift in Sources */,
 				23033BB52BA1036900E41F5D /* MealListOperation.swift in Sources */,
+				237438D42BB3192F00937DF0 /* ListTemplate.swift in Sources */,
 				23A4CC7F2BB11D5A0001B773 /* BackButton.swift in Sources */,
 				23B0BE492B965453004F43ED /* MealListManager.swift in Sources */,
 			);

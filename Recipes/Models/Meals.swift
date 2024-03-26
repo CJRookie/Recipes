@@ -17,9 +17,7 @@ class Meal: Codable, Identifiable, Hashable {
     var name: String
     var thumb: String
     @Attribute(.unique) var id: String
-    var isFavorite: Bool = false
     var dateOfCreation: Date = Date.now
-    var isAdded: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case name = "strMeal"
@@ -41,12 +39,10 @@ class Meal: Codable, Identifiable, Hashable {
         try container.encode(id, forKey: .id)
     }
     
-    init(name: String, thumb: String, id: String, isFavorite: Bool = false, dateOfCreation: Date = .now, isAdded: Bool = false) {
+    init(name: String, thumb: String, id: String, dateOfCreation: Date = .now) {
         self.name = name
         self.thumb = thumb
         self.id = id
-        self.isFavorite = isFavorite
         self.dateOfCreation = dateOfCreation
-        self.isAdded = isAdded
     }
 }

@@ -11,9 +11,15 @@ struct FavoriteList: View {
     @Environment(FavoriteListManager.self) private var manager
     
     var body: some View {
-        List(manager.favoriteRecipes, id: \.self) { recipe in
-            Text(recipe)
+        NavigationStack {
+            Group {
+                if !manager.recipes.isEmpty {
+                    ListTemplate(list: manager.recipes, navTitle: "Favorite")
+                }
+            }
         }
-        .listStyle(.plain)
+        .onAppear {
+            manager.getFavoriteRecipes()
+        }
     }
 }

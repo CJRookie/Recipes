@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct MealDetail: View {
-    @Environment(FavoriteListManager.self) private var favoriteListManager
+    @Environment(FavoriteListManager.self) private var favoritesManager
     @State private var manager: MealDetailManager = MealDetailManager()
     @State private var themes: [Color] = [Color.green, Color.orange, Color.blue, Color.pink, Color.yellow, Color.purple]
     @State private var image: UIImage?
-    @State private var isFavorite: Bool
     @State private var selectedRecipeComponent: RecipeComponent = .ingredients
+    @State private var isFavorite: Bool
     let meal: Meal
     
-    init(meal: Meal, favorites: [String]) {
+    init(meal: Meal, favorites: [Meal]) {
         self.meal = meal
-        _isFavorite = State(initialValue: favorites.contains(meal.name))
+        _isFavorite = .init(initialValue: favorites.contains { $0.name == meal.name })
     }
-
+    
     var body: some View {
         VStack(spacing: Constant.MealDetail.outermostVStackSpacing) {
             dessertImage
@@ -46,8 +46,8 @@ struct MealDetail: View {
     
     private var favoriteButton: some View {
         Button {
+            isFavorite ? favoritesManager.delete(meal) : favoritesManager.add(meal)
             isFavorite.toggle()
-            favoriteListManager.updateFavoriteRecipes(isAdded: isFavorite, with: meal.name)
         } label: {
             Image(systemName: "heart.circle.fill")
                 .background(Circle().fill(.white).padding(Constant.MealDetail.favoriteButtonBGPadding))
