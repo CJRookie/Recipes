@@ -6,30 +6,57 @@
 //
 
 import XCTest
+@testable import Recipes
+import SwiftData
 
 final class FavoriteListManagerTests: XCTestCase {
+    var manager: FavoriteListManager!
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try ModelContainer(for: Meal.self, configurations: config)
+        manager = FavoriteListManager(context: ModelContext(container))
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        manager = nil
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testAddSamples_Success() throws {
+        let samples = [Meal(name: "sample1Name", thumb: "sample1Thumb", id: "sample1"), Meal(name: "sample2Name", thumb: "sample2Thumb", id: "sample2"), Meal(name: "sample3Name", thumb: "sample3Thumb", id: "sample3")]
+        
+        XCTAssertTrue(manager.recipes.isEmpty)
+        
+        for index in 0..<samples.count {
+            manager.add(samples[index])
+        }
+        
+        manager.getFavoriteRecipes()
+        
+        for sample in samples {
+            XCTAssertTrue(manager.recipes.contains(where: { $0.name == sample.name }))
         }
     }
-
+    
+    func testDeleteSamples_Success() throws {
+        let samples = [Meal(name: "sample1Name", thumb: "sample1Thumb", id: "sample1"), Meal(name: "sample2Name", thumb: "sample2Thumb", id: "sample2"), Meal(name: "sample3Name", thumb: "sample3Thumb", id: "sample3")]
+        
+        XCTAssertTrue(manager.recipes.isEmpty)
+        
+        for index in 0..<samples.count {
+            manager.add(samples[index])
+        }
+        
+        manager.getFavoriteRecipes()
+        
+        for sample in samples {
+            XCTAssertTrue(manager.recipes.contains(where: { $0.name == sample.name }))
+        }
+        
+        for sample in samples {
+            manager.delete(sample)
+        }
+        
+        XCTAssertTrue(manager.recipes.isEmpty)
+    }
 }
