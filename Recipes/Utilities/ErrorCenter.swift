@@ -8,15 +8,12 @@
 import Foundation
 
 enum NetworkDataServiceError: Error {
-    case invalidURL
     case invalidHTTPResponse
 }
 
 extension NetworkDataServiceError: LocalizedError {
     var errorDescription: String? {
         switch self {
-        case .invalidURL:
-            NSLocalizedString("The URL provided is not valid. Please check that you have entered the correct URL and try again.", comment: "invalidURL")
         case .invalidHTTPResponse:
             NSLocalizedString("The server returned an unexpected response. Please try again later or contact the server administrator.", comment: "invalidHTTPResponse")
         }

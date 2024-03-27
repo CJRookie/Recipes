@@ -25,7 +25,6 @@ struct RecipeDataRetriever: NetworkDataService {
     /// - Parameter url: The URL from which to download the data.
     /// - Returns: The downloaded data.
     /// - Throws:
-    ///   - `NetworkDataServiceError.invalidURL`: If the provided URL is invalid or cannot be converted.
     ///   - `NetworkDataServiceError.invalidHTTPResponse`: If the HTTP response status code is outside the range of 200 to 299.
     func downloadData(from url: URL) async throws -> (Data, URLResponse) {
         let (data, response) = try await urlSession.data(from: url)
