@@ -13,7 +13,7 @@ class FavoriteListManager {
     private(set) var recipes: [Meal] = []
     private let context: ModelContext
     
-    init(context: ModelContext = LocalDataCenter.shared.context) {
+    init(context: ModelContext = LocalData.shared.context) {
         self.context = context
     }
     
@@ -39,17 +39,17 @@ class FavoriteListManager {
     }
 }
 
-class LocalDataCenter {
-    static let shared = LocalDataCenter()
+class LocalData {
+    static let shared = LocalData()
     private let container: ModelContainer
     let context: ModelContext
     
-    private init() {
+    init() {
         do {
             container = try ModelContainer(for: Meal.self)
             context = ModelContext(container)
         } catch {
-            fatalError("Failed to create container for 'Meal'.")
+            fatalError("unable to create container for the model 'Meal'.")
         }
     }
 }

@@ -18,8 +18,5 @@ struct FavoriteList: View {
                 }
             }
         }
-        .onAppear {
-            manager.getFavoriteRecipes()
-        }
     }
 }

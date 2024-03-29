@@ -14,7 +14,7 @@ class MealListManager {
     private(set) var mealList: [Meal] = []
     var error: Error?
     
-    init(dataRetriever: NetworkDataService = RecipeDataRetriever(), urlRetriever: BundleDataService = RecipeDataURLRetriever()) {
+    init(dataRetriever: NetworkDataService = DataRetriever(), urlRetriever: BundleDataService = URLRetriever()) {
         self.dataRetriever = dataRetriever
         self.urlRetriever = urlRetriever
     }

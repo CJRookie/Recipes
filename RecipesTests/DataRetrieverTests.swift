@@ -1,6 +1,6 @@
 //
 //  DataRetrieverTests.swift
-//  RecipeDataRetrieverTests
+//  RecipesTests
 //
 //  Created by CJ on 3/18/24.
 //
@@ -9,7 +9,7 @@ import XCTest
 @testable import Recipes
 
 final class DataRetrieverTests: XCTestCase {
-    var retriever: RecipeDataRetriever!
+    var retriever: DataRetriever!
     lazy var session: URLSession = {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [MockURLProtocol.self]
@@ -17,7 +17,7 @@ final class DataRetrieverTests: XCTestCase {
     }()
     
     override func setUpWithError() throws {
-        retriever = RecipeDataRetriever(urlSession: session)
+        retriever = DataRetriever(urlSession: session)
     }
     
     override func tearDownWithError() throws {

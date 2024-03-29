@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct IngredientRow: View {
+    @Environment(ImageRetriever.self) private var retriever
     @State private var image: UIImage?
     var manager: MealDetailManager
     let ingredient: String
@@ -26,7 +27,7 @@ struct IngredientRow: View {
         .frame(height: Constant.IngredientRow.rowHeight)
         .background(RoundedRectangle(cornerRadius: Constant.IngredientRow.cornerRadius).fill(theme.opacity(Constant.IngredientRow.themeOpacity)))
         .task {
-            image = await manager.fetchIngredientImage(ingredient)
+            image = await retriever.fetchIngredientImage(ingredient)
         }
     }
     

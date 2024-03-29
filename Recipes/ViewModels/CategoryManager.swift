@@ -14,7 +14,7 @@ class CategoryManager {
     private(set) var categories: [Category] = []
     var error: Error?
     
-    init(dataRetriever: NetworkDataService = RecipeDataRetriever(), urlRetriever: BundleDataService = RecipeDataURLRetriever()) {
+    init(dataRetriever: NetworkDataService = DataRetriever(), urlRetriever: BundleDataService = URLRetriever()) {
         self.dataRetriever = dataRetriever
         self.urlRetriever = urlRetriever
     }

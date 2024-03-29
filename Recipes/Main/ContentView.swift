@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     @State private var selection: Tab = .category
+    @Environment(FavoriteListManager.self) private var manager
     
     enum Tab: String {
         case category
@@ -31,6 +33,9 @@ struct ContentView: View {
                     Image(systemName: "heart.fill")
                 }
                 .tag(Tab.favorite)
+        }
+        .task {
+            manager.getFavoriteRecipes()
         }
     }
 }

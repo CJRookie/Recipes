@@ -15,7 +15,7 @@ class MealDetailManager {
     private(set) var detail: (Detail?, Error?)
     var error: Error?
     
-    init(dataRetriever: NetworkDataService = RecipeDataRetriever(), urlRetriever: BundleDataService = RecipeDataURLRetriever()) {
+    init(dataRetriever: NetworkDataService = DataRetriever(), urlRetriever: BundleDataService = URLRetriever()) {
         self.dataRetriever = dataRetriever
         self.urlRetriever = urlRetriever
     }
@@ -35,20 +35,6 @@ class MealDetailManager {
         } catch {
             detail = (nil, error)
             self.error = error
-        }
-    }
-    
-    /// Fetches an image of the specified ingredient.
-    /// - Parameter ingredient: The name of the ingredient to fetch the image for.
-    /// - Returns: An optional `UIImage` object representing the image of the ingredient, or `nil` if the image cannot be fetched.
-    func fetchIngredientImage(_ ingredient: String) async -> UIImage? {
-        do {
-            let baseURL = try urlRetriever.retrieveDownloadURL(from: Constant.Configure.resourceFile, basedOn: Constant.Configure.ingredientImageBaseURLKey)
-            let ingredientURL = baseURL + ingredient + "-Small.png"
-            return await ImageCacheCenter.shared.getImage(from: ingredientURL)
-        } catch {
-            self.error = error
-            return nil
         }
     }
 }

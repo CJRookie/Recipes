@@ -6,17 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct RecipesApp: App {
-    @State private var categoryManager = CategoryManager()
-    @State private var favoriteListManager = FavoriteListManager()
+    @State private var manager: FavoriteListManager = FavoriteListManager()
+    @State private var imageRetriever = ImageRetriever()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(categoryManager)
-                .environment(favoriteListManager)
+                .environment(manager)
+                .environment(imageRetriever)
         }
     }
 }

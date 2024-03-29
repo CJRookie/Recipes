@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct CategoryGallery: View {
-    @Environment(FavoriteListManager.self) private var favoritesManager
-    @Environment(CategoryManager.self) private var manager
+    @State private var manager = CategoryManager()
     
     var body: some View {
         NavigationStack {
@@ -36,9 +35,6 @@ struct CategoryGallery: View {
         }
         .task {
             await manager.fetchCategories()
-        }
-        .onAppear {
-            favoritesManager.getFavoriteRecipes()
         }
     }
 }

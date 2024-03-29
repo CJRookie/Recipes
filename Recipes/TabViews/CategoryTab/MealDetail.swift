@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MealDetail: View {
+    @Environment(ImageRetriever.self) private var retriever
     @Environment(FavoriteListManager.self) private var favoritesManager
     @State private var manager: MealDetailManager = MealDetailManager()
     @State private var themes: [Color] = [Color.green, Color.orange, Color.blue, Color.pink, Color.yellow, Color.purple]
@@ -40,7 +41,7 @@ struct MealDetail: View {
         }
         .task {
             await manager.fetchDetail(for: meal.id)
-            image = await ImageCacheCenter.shared.getImage(from: meal.thumb)
+            image = await retriever.getImage(from: meal.thumb)
         }
     }
     

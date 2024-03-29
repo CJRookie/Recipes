@@ -9,14 +9,14 @@ import XCTest
 @testable import Recipes
 
 final class ImageRetrieverTests: XCTestCase {
-    var imageCache: ImageCacheCenter!
+    var imageCache: ImageRetriever!
     var mockNetworkDataRetriever: NetworkDataService!
     var mockURLCache: URLCache!
 
     override func setUpWithError() throws {
         mockNetworkDataRetriever = MockNetworkDataService()
         mockURLCache = URLCache(memoryCapacity: 100 * 1024 * 1024, diskCapacity: 0)
-        imageCache = ImageCacheCenter(sharedURLCache: mockURLCache, networkDataRetriever: mockNetworkDataRetriever)
+        imageCache = ImageRetriever(sharedURLCache: mockURLCache, networkDataRetriever: mockNetworkDataRetriever, bundleDataService: URLRetriever())
     }
 
     override func tearDownWithError() throws {
@@ -25,7 +25,7 @@ final class ImageRetrieverTests: XCTestCase {
         mockURLCache = nil
     }
     
-    func testGetRecipeImage_FetchFromURL() async throws {
+    func testGetImage_FetchFromURL() async throws {
         let url = "http://example.com"
         let expectation = XCTestExpectation(description: "Fetch image from a URL")
         
@@ -36,7 +36,7 @@ final class ImageRetrieverTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 2.0)
     }
     
-    func testGetRecipeImage_FetchFromCache() async throws {
+    func testGetImage_FetchFromCache() async throws {
         let strURL = "http://example.com"
         let url = URL(string: strURL)!
         let expectation = XCTestExpectation(description: "Fetch image from cache")
@@ -45,7 +45,7 @@ final class ImageRetrieverTests: XCTestCase {
         let cachedResponse = CachedURLResponse(response: response, data: imageData, storagePolicy: .allowedInMemoryOnly)
         let request = URLRequest(url: url)
         mockURLCache.storeCachedResponse(cachedResponse, for: request)
-        imageCache = ImageCacheCenter(sharedURLCache: mockURLCache, networkDataRetriever: DataRetriever())
+        imageCache = ImageRetriever(sharedURLCache: mockURLCache, networkDataRetriever: DataRetriever(), bundleDataService: URLRetriever())
         
         let result = await imageCache.getImage(from: strURL)
         XCTAssertNotNil(result)

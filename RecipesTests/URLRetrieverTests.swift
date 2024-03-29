@@ -9,10 +9,10 @@ import XCTest
 @testable import Recipes
 
 final class URLRetrieverTests: XCTestCase {
-    var urlRetriever: RecipeDataURLRetriever!
+    var urlRetriever: URLRetriever!
 
     override func setUpWithError() throws {
-        urlRetriever = RecipeDataURLRetriever()
+        urlRetriever = URLRetriever()
     }
 
     override func tearDownWithError() throws {

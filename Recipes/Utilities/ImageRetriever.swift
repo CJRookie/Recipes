@@ -8,27 +8,29 @@
 import Foundation
 import UIKit
 
-protocol ImageCacheable {
-    func getImage(from url: String) async -> UIImage?
+protocol ImageDataService {
+    func getImage(from url: String) async throws -> UIImage?
     func fetchImage(from url: URL) async throws -> UIImage?
     func cacheImage(from url: URL, response: URLResponse, data: Data)
 }
 
-struct ImageRetriever: ImageCacheable {
+@Observable
+class ImageRetriever: ImageDataService {
     private var sharedURLCache: URLCache
     private var networkDataRetriever: NetworkDataService
+    private var bundleDataService: BundleDataService
     private let maxMemoryCacheSize: Int = 100 * 1024 * 1024
     
     init() {
-        sharedURLCache = .shared
-        sharedURLCache.diskCapacity = 0
-        sharedURLCache.memoryCapacity = maxMemoryCacheSize
+        sharedURLCache = URLCache(memoryCapacity: maxMemoryCacheSize, diskCapacity: 0)
         networkDataRetriever = DataRetriever()
+        bundleDataService = URLRetriever()
     }
     
-    init(sharedURLCache: URLCache, networkDataRetriever: NetworkDataService) {
+    init(sharedURLCache: URLCache, networkDataRetriever: NetworkDataService, bundleDataService: BundleDataService) {
         self.sharedURLCache = sharedURLCache
         self.networkDataRetriever = networkDataRetriever
+        self.bundleDataService = bundleDataService
     }
     
     /// Retrieves a meal image from the specified URL.
@@ -45,6 +47,19 @@ struct ImageRetriever: ImageCacheable {
             } catch {
                 return nil
             }
+        }
+    }
+    
+    /// Fetches an image of the specified ingredient.
+    /// - Parameter ingredient: The name of the ingredient to fetch the image for.
+    /// - Returns: An optional `UIImage` object representing the image of the ingredient, or `nil` if the image cannot be fetched.
+    func fetchIngredientImage(_ ingredient: String) async -> UIImage? {
+        do {
+            let baseURL = try bundleDataService.retrieveDownloadURL(from: Constant.Configure.resourceFile, basedOn: Constant.Configure.ingredientImageBaseURLKey)
+            let ingredientURL = baseURL + ingredient + "-Small.png"
+            return await getImage(from: ingredientURL)
+        } catch {
+            return nil
         }
     }
     
