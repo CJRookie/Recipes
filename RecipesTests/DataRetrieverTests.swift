@@ -1,5 +1,5 @@
 //
-//  RecipeDataRetrieverTests.swift
+//  DataRetrieverTests.swift
 //  RecipeDataRetrieverTests
 //
 //  Created by CJ on 3/18/24.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import Recipes
 
-final class RecipeDataRetrieverTests: XCTestCase {
+final class DataRetrieverTests: XCTestCase {
     var retriever: RecipeDataRetriever!
     lazy var session: URLSession = {
         let configuration = URLSessionConfiguration.ephemeral

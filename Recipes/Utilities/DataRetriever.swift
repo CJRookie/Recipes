@@ -1,5 +1,5 @@
 //
-//  RecipeDataRetriever.swift
+//  DataRetriever.swift
 //  Recipes
 //
 //  Created by CJ on 3/4/24.
@@ -14,7 +14,7 @@ protocol NetworkDataService {
     func fetch<T>(from url: URL) async throws -> T where T: Decodable
 }
 
-struct RecipeDataRetriever: NetworkDataService {
+struct DataRetriever: NetworkDataService {
     var urlSession: URLSession
     
     init(urlSession: URLSession = .shared) {

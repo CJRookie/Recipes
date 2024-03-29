@@ -1,5 +1,5 @@
 //
-//  RecipeDataURLRetrieverTests.swift
+//  URLRetrieverTests.swift
 //  RecipesTests
 //
 //  Created by CJ on 3/20/24.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import Recipes
 
-final class RecipeDataURLRetrieverTests: XCTestCase {
+final class URLRetrieverTests: XCTestCase {
     var urlRetriever: RecipeDataURLRetriever!
 
     override func setUpWithError() throws {

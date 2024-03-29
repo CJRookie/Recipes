@@ -1,5 +1,5 @@
 //
-//  RecipeDataURLRetriever.swift
+//  URLRetriever.swift
 //  Recipes
 //
 //  Created by CJ on 3/20/24.
@@ -11,7 +11,7 @@ protocol BundleDataService {
     func retrieveDownloadURL(from resourceFile: String, basedOn key: String) throws -> String
 }
 
-struct RecipeDataURLRetriever: BundleDataService {
+struct URLRetriever: BundleDataService {
     
     /// Retrieves the API address from a specified property list (plist) file based on a provided key.
     /// - Parameters:

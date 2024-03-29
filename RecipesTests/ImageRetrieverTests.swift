@@ -1,5 +1,5 @@
 //
-//  ImageCacheCenterTests.swift
+//  ImageRetrieverTests.swift
 //  RecipesTests
 //
 //  Created by CJ on 3/20/24.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import Recipes
 
-final class ImageCacheCenterTests: XCTestCase {
+final class ImageRetrieverTests: XCTestCase {
     var imageCache: ImageCacheCenter!
     var mockNetworkDataRetriever: NetworkDataService!
     var mockURLCache: URLCache!
@@ -45,7 +45,7 @@ final class ImageCacheCenterTests: XCTestCase {
         let cachedResponse = CachedURLResponse(response: response, data: imageData, storagePolicy: .allowedInMemoryOnly)
         let request = URLRequest(url: url)
         mockURLCache.storeCachedResponse(cachedResponse, for: request)
-        imageCache = ImageCacheCenter(sharedURLCache: mockURLCache, networkDataRetriever: RecipeDataRetriever())
+        imageCache = ImageCacheCenter(sharedURLCache: mockURLCache, networkDataRetriever: DataRetriever())
         
         let result = await imageCache.getImage(from: strURL)
         XCTAssertNotNil(result)
