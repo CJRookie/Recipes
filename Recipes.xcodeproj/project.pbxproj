@@ -15,6 +15,8 @@
 		237438D42BB3192F00937DF0 /* ListTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237438D32BB3192F00937DF0 /* ListTemplate.swift */; };
 		237438D62BB3438C00937DF0 /* FavoriteListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237438D52BB3438C00937DF0 /* FavoriteListManager.swift */; };
 		23A212392BB3BADB00353127 /* FavoriteListManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A212382BB3BADB00353127 /* FavoriteListManagerTests.swift */; };
+		23A212412BB7764700353127 /* PersistenceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A212402BB7764700353127 /* PersistenceProvider.swift */; };
+		23A212432BBA7CEC00353127 /* PersistenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A212422BBA7CEC00353127 /* PersistenceContainer.swift */; };
 		23A4CC7F2BB11D5A0001B773 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4CC7E2BB11D5A0001B773 /* BackButton.swift */; };
 		23B0BE392B9651F4004F43ED /* RecipesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B0BE382B9651F4004F43ED /* RecipesApp.swift */; };
 		23B0BE3B2B9651F4004F43ED /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B0BE3A2B9651F4004F43ED /* ContentView.swift */; };
@@ -63,6 +65,8 @@
 		237438D32BB3192F00937DF0 /* ListTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTemplate.swift; sourceTree = "<group>"; };
 		237438D52BB3438C00937DF0 /* FavoriteListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListManager.swift; sourceTree = "<group>"; };
 		23A212382BB3BADB00353127 /* FavoriteListManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListManagerTests.swift; sourceTree = "<group>"; };
+		23A212402BB7764700353127 /* PersistenceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceProvider.swift; sourceTree = "<group>"; };
+		23A212422BBA7CEC00353127 /* PersistenceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceContainer.swift; sourceTree = "<group>"; };
 		23A4CC7E2BB11D5A0001B773 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		23B0BE352B9651F4004F43ED /* Recipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23B0BE382B9651F4004F43ED /* RecipesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesApp.swift; sourceTree = "<group>"; };
@@ -208,6 +212,8 @@
 		23B0BE542B967141004F43ED /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				23A212402BB7764700353127 /* PersistenceProvider.swift */,
+				23A212422BBA7CEC00353127 /* PersistenceContainer.swift */,
 				23B0BE4A2B9654B7004F43ED /* DataRetriever.swift */,
 				23DF5EDA2BAB2574004495B1 /* URLRetriever.swift */,
 				23DF5ED62BAA80A2004495B1 /* ImageRetriever.swift */,
@@ -370,6 +376,7 @@
 				23DF5EC42BA7EC2C004495B1 /* Categories.swift in Sources */,
 				23B0BE4D2B9659D2004F43ED /* MealList.swift in Sources */,
 				23B0BE512B9670F9004F43ED /* MealRow.swift in Sources */,
+				23A212412BB7764700353127 /* PersistenceProvider.swift in Sources */,
 				23DF5EE02BAC9659004495B1 /* FavoriteList.swift in Sources */,
 				23B0BE472B9653B5004F43ED /* Meals.swift in Sources */,
 				237438D62BB3438C00937DF0 /* FavoriteListManager.swift in Sources */,
@@ -377,6 +384,7 @@
 				23DF5EE22BACA0E4004495B1 /* CategoryGallery.swift in Sources */,
 				23B0BE602B96E7EE004F43ED /* ErrorCenter.swift in Sources */,
 				23DF5EC62BA7EE50004495B1 /* CategoryManager.swift in Sources */,
+				23A212432BBA7CEC00353127 /* PersistenceContainer.swift in Sources */,
 				23032AAE2B9B897600B3E5B7 /* MealDetailManager.swift in Sources */,
 				23DF5EE42BACB032004495B1 /* CategoryCard.swift in Sources */,
 				23DF5EDB2BAB2574004495B1 /* URLRetriever.swift in Sources */,

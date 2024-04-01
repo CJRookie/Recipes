@@ -15,7 +15,7 @@ final class FavoriteListManagerTests: XCTestCase {
     override func setUpWithError() throws {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: Meal.self, configurations: config)
-        manager = FavoriteListManager(context: ModelContext(container))
+        manager = FavoriteListManager(container: container)
     }
 
     override func tearDownWithError() throws {
@@ -31,7 +31,7 @@ final class FavoriteListManagerTests: XCTestCase {
             manager.add(samples[index])
         }
         
-        manager.getFavoriteRecipes()
+        manager.fetchFavoriteRecipes()
         
         for sample in samples {
             XCTAssertTrue(manager.recipes.contains(where: { $0.name == sample.name }))
@@ -47,7 +47,7 @@ final class FavoriteListManagerTests: XCTestCase {
             manager.add(samples[index])
         }
         
-        manager.getFavoriteRecipes()
+        manager.fetchFavoriteRecipes()
         
         for sample in samples {
             XCTAssertTrue(manager.recipes.contains(where: { $0.name == sample.name }))

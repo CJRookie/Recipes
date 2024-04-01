@@ -11,45 +11,37 @@ import SwiftData
 @Observable
 class FavoriteListManager {
     private(set) var recipes: [Meal] = []
-    private let context: ModelContext
+    private let persistenceContainer: PersistenceContainer
+    private let persistenceProvider: DataPersistenceService
+    private(set) var error: Error?
     
-    init(context: ModelContext = LocalData.shared.context) {
-        self.context = context
+    init() {
+        persistenceContainer = PersistenceContainer()
+        persistenceProvider = PersistenceProvider(context: persistenceContainer.context)
     }
     
-    func getFavoriteRecipes() {
+    init(container: ModelContainer) {
+        persistenceContainer = PersistenceContainer(container: container)
+        persistenceProvider = PersistenceProvider(context: persistenceContainer.context)
+    }
+    
+    func fetchFavoriteRecipes() {
         do {
-            let descriptor = FetchDescriptor<Meal>(sortBy: [SortDescriptor(\.dateOfCreation)])
-            recipes = try context.fetch(descriptor)
+            recipes = try persistenceProvider.fetch()
         } catch {
-            print("Unable to get the favorite recipes: \(error)")
+            self.error = error
         }
     }
     
     func add(_ meal: Meal) {
-        context.insert(Meal(name: meal.name, thumb: meal.thumb, id: meal.id, dateOfCreation: .now))
-        getFavoriteRecipes()
+        persistenceProvider.add(meal)
+        fetchFavoriteRecipes()
     }
     
     func delete(_ meal: Meal) {
         if let meal = recipes.first(where: { $0.name == meal.name }) {
-            context.delete(meal)
+            persistenceProvider.delete(meal)
         }
-        getFavoriteRecipes()
-    }
-}
-
-class LocalData {
-    static let shared = LocalData()
-    private let container: ModelContainer
-    let context: ModelContext
-    
-    init() {
-        do {
-            container = try ModelContainer(for: Meal.self)
-            context = ModelContext(container)
-        } catch {
-            fatalError("unable to create container for the model 'Meal'.")
-        }
+        fetchFavoriteRecipes()
     }
 }

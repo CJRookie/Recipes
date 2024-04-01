@@ -35,7 +35,7 @@ struct ContentView: View {
                 .tag(Tab.favorite)
         }
         .task {
-            manager.getFavoriteRecipes()
+            manager.fetchFavoriteRecipes()
         }
     }
 }
