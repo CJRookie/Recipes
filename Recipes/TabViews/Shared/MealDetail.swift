@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MealDetail: View {
-    @Environment(ImageRetriever.self) private var retriever
+    @Environment(ImageCenter.self) private var imageCenter
     @Environment(FavoriteListManager.self) private var favoritesManager
     @State private var manager: MealDetailManager = MealDetailManager()
     @State private var themes: [Color] = [Color.green, Color.orange, Color.blue, Color.pink, Color.yellow, Color.purple]
@@ -41,7 +41,7 @@ struct MealDetail: View {
         }
         .task {
             await manager.fetchDetail(for: meal.id)
-            image = await retriever.getImage(from: meal.thumb)
+            image = await imageCenter.getImage(from: meal.thumb)
         }
     }
     
@@ -103,7 +103,7 @@ struct MealDetail: View {
             VStack(spacing: 0) {
                 ForEach(0..<(manager.detail.0?.ingredients.count ?? 0), id: \.self) { index in
                     if let ingredient = manager.detail.0?.ingredients[index], let measure = manager.detail.0?.measures[index] {
-                        IngredientRow(manager: manager, ingredient: ingredient, measure: measure, theme: themes[index % themes.count])
+                        IngredientRow(ingredient: ingredient, measure: measure, theme: themes[index % themes.count])
                     }
                 }
             }

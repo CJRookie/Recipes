@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct MealRow: View {
+    @Environment(ImageCenter.self) private var imageCenter
     @State private var image: UIImage?
     let meal: Meal
-    @Environment(ImageRetriever.self) private var retriever
     
     var body: some View {
         HStack {
@@ -23,7 +23,7 @@ struct MealRow: View {
         .padding(Constant.MealRow.overlayPadding)
         .glowRoundedRect(rectHeight: Constant.MealRow.roundedRecHeight, glowColor: .gray.opacity(Constant.MealRow.shadowOpacity))
         .task {
-            image = await retriever.getImage(from: meal.thumb) ?? UIImage()
+            image = await imageCenter.getImage(from: meal.thumb) ?? UIImage()
         }
     }
     
