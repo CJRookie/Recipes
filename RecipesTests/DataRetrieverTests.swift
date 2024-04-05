@@ -10,18 +10,18 @@ import XCTest
 
 final class DataRetrieverTests: XCTestCase {
     var retriever: DataRetriever!
-    lazy var session: URLSession = {
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.protocolClasses = [MockURLProtocol.self]
-        return URLSession(configuration: configuration)
-    }()
+    var session: URLSession!
     
     override func setUpWithError() throws {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [MockURLProtocol.self]
+        session = URLSession(configuration: configuration)
         retriever = DataRetriever(urlSession: session)
     }
     
     override func tearDownWithError() throws {
         retriever = nil
+        session = nil
         MockURLProtocol.requestHandler = nil
         URLProtocol.unregisterClass(MockURLProtocol.self)
     }

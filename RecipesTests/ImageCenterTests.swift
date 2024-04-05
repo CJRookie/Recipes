@@ -6,23 +6,54 @@
 //
 
 import XCTest
+@testable import Recipes
 
 final class ImageCenterTests: XCTestCase {
-    var imageCenter: ImageCenterTests!
+    var imageCenter: ImageCenter!
+    var mockNetworkDataRetriever: NetworkDataService!
+    var mockURLCache: URLCache!
 
     override func setUpWithError() throws {
-        
+        mockNetworkDataRetriever = MockNetworkDataService()
+        mockURLCache = URLCache(memoryCapacity: 10 * 1024 * 1024, diskCapacity: 0)
+        imageCenter = ImageCenter(imageCache: ImageCache(urlCache: mockURLCache, networkDataRetriever: mockNetworkDataRetriever))
     }
 
     override func tearDownWithError() throws {
+        mockURLCache.removeAllCachedResponses()
+        imageCenter = nil
+        mockNetworkDataRetriever = nil
+        mockURLCache = nil
+    }
+    
+    func testGetImage_FetchFromURL() async throws {
+        mockURLCache.removeAllCachedResponses()
+        let url = "http://photo.com"
+        let expectation = XCTestExpectation(description: "Fetch image from a URL")
         
+        let result = await imageCenter.getImage(from: url)
+        XCTAssertNotNil(result)
+        expectation.fulfill()
+        
+        await fulfillment(of: [expectation], timeout: 2.0)
+    }
+    
+    func testGetImage_FetchFromCache() async throws {
+        mockURLCache.removeAllCachedResponses()
+        let strURL = "http://photo.fill.com"
+        let url = URL(string: strURL)!
+        let expectation = XCTestExpectation(description: "Fetch image from cache")
+        let imageData = UIImage(systemName: "photo.fill")!.pngData()!
+        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
+        let cachedResponse = CachedURLResponse(response: response, data: imageData, storagePolicy: .allowedInMemoryOnly)
+        let request = URLRequest(url: url)
+        mockURLCache.storeCachedResponse(cachedResponse, for: request)
+        
+        let result = await imageCenter.getImage(from: strURL)
+        XCTAssertNotNil(result)
+        XCTAssertEqual(imageData.count, result?.pngData()!.count)
+        expectation.fulfill()
+        await fulfillment(of: [expectation], timeout: 2.0)
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
 }

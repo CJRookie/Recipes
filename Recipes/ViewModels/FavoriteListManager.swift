@@ -10,19 +10,16 @@ import SwiftData
 
 @Observable
 class FavoriteListManager {
-    private(set) var recipes: [Meal] = []
-    private let persistenceContainer: PersistenceContainer
     private let persistenceProvider: DataPersistenceService
+    private(set) var recipes: [Meal] = []
     private(set) var error: Error?
     
     init() {
-        persistenceContainer = PersistenceContainer()
-        persistenceProvider = PersistenceProvider(context: persistenceContainer.context)
+        persistenceProvider = PersistenceProvider()
     }
     
     init(container: ModelContainer) {
-        persistenceContainer = PersistenceContainer(container: container)
-        persistenceProvider = PersistenceProvider(context: persistenceContainer.context)
+        persistenceProvider = PersistenceProvider(container: container)
     }
     
     func fetchFavoriteRecipes() {
@@ -41,7 +38,7 @@ class FavoriteListManager {
     func delete(_ meal: Meal) {
         if let meal = recipes.first(where: { $0.name == meal.name }) {
             persistenceProvider.delete(meal)
+            fetchFavoriteRecipes()
         }
-        fetchFavoriteRecipes()
     }
 }

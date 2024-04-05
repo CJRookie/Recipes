@@ -16,10 +16,21 @@ protocol DataPersistenceService {
 }
 
 struct PersistenceProvider: DataPersistenceService {
-    let context: ModelContext
+    private let container: ModelContainer
+    private(set) var context: ModelContext
     
-    init(context: ModelContext) {
-        self.context = context
+    init() {
+        do {
+            try container = ModelContainer(for: Meal.self)
+            context = ModelContext(container)
+        } catch {
+            fatalError("Failed to load persistent stores: \(error)")
+        }
+    }
+    
+    init(container: ModelContainer) {
+        self.container = container
+        self.context = ModelContext(container)
     }
     
     func fetch() throws -> [Meal] {

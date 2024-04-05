@@ -10,14 +10,14 @@ import SwiftData
 
 @main
 struct RecipesApp: App {
-    @State private var manager: FavoriteListManager = FavoriteListManager()
-    @State private var imageRetriever = ImageRetriever()
+    @State private var manager = FavoriteListManager()
+    @State private var imageCenter = ImageCenter()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(manager)
-                .environment(imageRetriever)
+                .environment(imageCenter)
         }
     }
 }

@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct CategoryCard: View {
-    let category: Category
+    @Environment(ImageCenter.self) private var imageCenter
     @State private var image: UIImage?
-    @Environment(ImageRetriever.self) private var retriever
+    let category: Category
     
     var body: some View {
         ZStack {
@@ -26,7 +26,7 @@ struct CategoryCard: View {
         }
         .glowRoundedRect(rectHeight: 100, glowColor: .gray.opacity(0.8))
         .task {
-            image = await retriever.getImage(from: category.thumb)
+            image = await imageCenter.getImage(from: category.thumb)
         }
     }
 }
