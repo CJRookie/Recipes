@@ -11,12 +11,12 @@ import UIKit
 @Observable
 class ImageCenter {
     private let imageCache: ImageDataService
-    private let urlRetriever: BundleDataService
+    private let bundleDataService: BundleDataService
     private(set) var error: Error?
     
-    init(imageCache: ImageDataService = ImageCache(urlCache: .shared, networkDataRetriever: DataRetriever()), urlRetriever: BundleDataService = URLRetriever()) {
+    init(imageCache: ImageDataService = ImageCache(urlCache: .shared, networkDataService: DataRetriever()), bundleDataService: BundleDataService = URLRetriever()) {
         self.imageCache = imageCache
-        self.urlRetriever = urlRetriever
+        self.bundleDataService = bundleDataService
     }
     
     /// Retrieves a meal image from the specified URL.
@@ -42,7 +42,7 @@ class ImageCenter {
     /// - Returns: An optional `UIImage` object representing the image of the ingredient, or `nil` if the image cannot be fetched.
     func getImage(for ingredient: String) async -> UIImage? {
         do {
-            let baseURL = try urlRetriever.retrieveDownloadURL(from: Constant.Configure.resourceFile, basedOn: Constant.Configure.ingredientImageBaseURLKey)
+            let baseURL = try bundleDataService.retrieveDownloadURL(from: Constant.Configure.resourceFile, basedOn: Constant.Configure.ingredientImageBaseURLKey)
             let ingredientURL = baseURL + ingredient + "-Small.png"
             return await getImage(from: ingredientURL)
         } catch {

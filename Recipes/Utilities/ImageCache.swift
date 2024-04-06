@@ -16,18 +16,18 @@ protocol ImageDataService {
 
 struct ImageCache: ImageDataService {
     private(set) var urlCache: URLCache
-    private let networkDataRetriever: NetworkDataService
+    private let networkDataService: NetworkDataService
     
-    init(urlCache: URLCache, networkDataRetriever: NetworkDataService) {
+    init(urlCache: URLCache, networkDataService: NetworkDataService) {
         self.urlCache = urlCache
-        self.networkDataRetriever = networkDataRetriever
+        self.networkDataService = networkDataService
     }
     
     /// Fetches a meal image from the specified URL.
     /// - Parameter url: The URL from which to fetch the meal image.
     /// - Returns: A `UIImage` representing the fetched meal image, or `nil` if the image is not available.
     func fetchImage(from url: URL) async throws -> UIImage? {
-        let downloadedData = try await networkDataRetriever.downloadData(from: url)
+        let downloadedData = try await networkDataService.downloadData(from: url)
         let image = UIImage(data: downloadedData.0)
         cacheImage(from: url, response: downloadedData.1, data: downloadedData.0)
         return image

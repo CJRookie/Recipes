@@ -10,22 +10,22 @@ import UIKit
 
 @Observable
 class CategoryManager {
-    private let dataRetriever: NetworkDataService
-    private let urlRetriever: BundleDataService
+    private let networkDataService: NetworkDataService
+    private let bundleDataService: BundleDataService
     private(set) var categories: [Category] = []
     var error: Error?
     
-    init(dataRetriever: NetworkDataService = DataRetriever(), urlRetriever: BundleDataService = URLRetriever()) {
-        self.dataRetriever = dataRetriever
-        self.urlRetriever = urlRetriever
+    init(networkDataService: NetworkDataService = DataRetriever(), bundleDataService: BundleDataService = URLRetriever()) {
+        self.networkDataService = networkDataService
+        self.bundleDataService = bundleDataService
     }
     
     /// Fetches meal categories.
     func fetchCategories() async {
         do {
-            let strURL = try urlRetriever.retrieveDownloadURL(from: Constant.Configure.resourceFile, basedOn: Constant.Configure.categoriesURLKey)
+            let strURL = try bundleDataService.retrieveDownloadURL(from: Constant.Configure.resourceFile, basedOn: Constant.Configure.categoriesURLKey)
             if let url = URL(string: strURL) {
-                let decodedData: Categories = try await dataRetriever.fetch(from: url)
+                let decodedData: Categories = try await networkDataService.fetch(from: url)
                 categories = decodedData.categories
             }
         } catch {

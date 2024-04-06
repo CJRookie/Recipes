@@ -10,19 +10,19 @@ import XCTest
 
 final class ImageCacheTests: XCTestCase {
     var imageCache: ImageCache!
-    var mockNetworkDataRetriever: NetworkDataService!
+    var mockNetworkDataService: NetworkDataService!
     var mockURLCache: URLCache!
 
     override func setUpWithError() throws {
-        mockNetworkDataRetriever = MockNetworkDataService()
+        mockNetworkDataService = MockNetworkDataService()
         mockURLCache = URLCache(memoryCapacity: 10 * 1024 * 1024, diskCapacity: 0)
-        imageCache = ImageCache(urlCache: mockURLCache, networkDataRetriever: mockNetworkDataRetriever)
+        imageCache = ImageCache(urlCache: mockURLCache, networkDataService: mockNetworkDataService)
     }
 
     override func tearDownWithError() throws {
         mockURLCache.removeAllCachedResponses()
         imageCache = nil
-        mockNetworkDataRetriever = nil
+        mockNetworkDataService = nil
         mockURLCache = nil
     }
     
@@ -49,19 +49,5 @@ final class ImageCacheTests: XCTestCase {
         imageCache.cacheImage(from: url, response: response, data: imageData)
         
         XCTAssertNotNil(mockURLCache.cachedResponse(for: request))
-    }
-}
-
-struct MockNetworkDataService: NetworkDataService {
-    var urlSession: URLSession = .shared
-    
-    func fetch<T>(from url: URL) async throws -> T where T : Decodable {
-        return "" as! T
-    }
-    
-    func downloadData(from url: URL) async throws -> (Data, URLResponse) {
-        let imageData = UIImage(systemName: "photo")!.pngData()!
-        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
-        return (imageData, response)
     }
 }

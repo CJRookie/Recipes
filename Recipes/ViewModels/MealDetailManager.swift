@@ -10,24 +10,24 @@ import UIKit
 
 @Observable
 class MealDetailManager {
-    private let dataRetriever: NetworkDataService
-    private let urlRetriever: BundleDataService
+    private let networkDataService: NetworkDataService
+    private let bundleDataService: BundleDataService
     private(set) var detail: (Detail?, Error?)
     var error: Error?
     
-    init(dataRetriever: NetworkDataService = DataRetriever(), urlRetriever: BundleDataService = URLRetriever()) {
-        self.dataRetriever = dataRetriever
-        self.urlRetriever = urlRetriever
+    init(networkDataService: NetworkDataService = DataRetriever(), bundleDataService: BundleDataService = URLRetriever()) {
+        self.networkDataService = networkDataService
+        self.bundleDataService = bundleDataService
     }
     
     /// Fetches detailed information for a specific meal.
     /// - Parameter meal: A meal for which to fetch detailed information.
     func fetchDetail(for meal: String) async {
         do {
-            let baseURL = try urlRetriever.retrieveDownloadURL(from: Constant.Configure.resourceFile, basedOn: Constant.Configure.detailBaseURLkey)
+            let baseURL = try bundleDataService.retrieveDownloadURL(from: Constant.Configure.resourceFile, basedOn: Constant.Configure.detailBaseURLkey)
             let detailURL = baseURL + meal
             if let url = URL(string: detailURL) {
-                let decodedData: MealDetails = try await dataRetriever.fetch(from: url)
+                let decodedData: MealDetails = try await networkDataService.fetch(from: url)
                 if let mealDetail = decodedData.meals.first {
                     detail = (mealDetail, nil)
                 }

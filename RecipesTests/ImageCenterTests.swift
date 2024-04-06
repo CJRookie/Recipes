@@ -10,20 +10,22 @@ import XCTest
 
 final class ImageCenterTests: XCTestCase {
     var imageCenter: ImageCenter!
-    var mockNetworkDataRetriever: NetworkDataService!
+    var mockNetworkDataService: NetworkDataService!
     var mockURLCache: URLCache!
+    var mockBundleDataService: BundleDataService!
 
     override func setUpWithError() throws {
-        mockNetworkDataRetriever = MockNetworkDataService()
+        mockNetworkDataService = MockNetworkDataService()
+        mockBundleDataService = MockBundleDataService()
         mockURLCache = URLCache(memoryCapacity: 10 * 1024 * 1024, diskCapacity: 0)
-        imageCenter = ImageCenter(imageCache: ImageCache(urlCache: mockURLCache, networkDataRetriever: mockNetworkDataRetriever))
+        imageCenter = ImageCenter(imageCache: ImageCache(urlCache: mockURLCache, networkDataService: mockNetworkDataService), bundleDataService: mockBundleDataService)
     }
 
     override func tearDownWithError() throws {
         mockURLCache.removeAllCachedResponses()
-        imageCenter = nil
-        mockNetworkDataRetriever = nil
         mockURLCache = nil
+        mockNetworkDataService = nil
+        imageCenter = nil
     }
     
     func testGetImage_FetchFromURL() async throws {
