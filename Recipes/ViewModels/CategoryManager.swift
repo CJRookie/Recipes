@@ -13,7 +13,7 @@ class CategoryManager {
     private let networkDataService: NetworkDataService
     private let bundleDataService: BundleDataService
     private(set) var categories: [Category] = []
-    var error: Error?
+    private(set) var error: Error?
     
     init(networkDataService: NetworkDataService = DataRetriever(), bundleDataService: BundleDataService = URLRetriever()) {
         self.networkDataService = networkDataService

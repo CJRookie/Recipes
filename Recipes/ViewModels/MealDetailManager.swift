@@ -13,7 +13,7 @@ class MealDetailManager {
     private let networkDataService: NetworkDataService
     private let bundleDataService: BundleDataService
     private(set) var detail: (Detail?, Error?)
-    var error: Error?
+    private(set) var error: Error?
     
     init(networkDataService: NetworkDataService = DataRetriever(), bundleDataService: BundleDataService = URLRetriever()) {
         self.networkDataService = networkDataService

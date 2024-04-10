@@ -12,7 +12,7 @@ class MealListManager {
     private let networkDataService: NetworkDataService
     private let bundleDataService: BundleDataService
     private(set) var mealList: [Meal] = []
-    var error: Error?
+    private(set) var error: Error?
     
     init(networkDataService: NetworkDataService = DataRetriever(), bundleDataService: BundleDataService = URLRetriever()) {
         self.networkDataService = networkDataService
