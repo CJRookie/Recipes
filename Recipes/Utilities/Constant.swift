@@ -30,7 +30,6 @@ struct Constant {
         static let headingSecFontSize: CGFloat = 28
         static let headingSecTopPadding: CGFloat = 24
         static let imageHeight: CGFloat = 160
-        static let favoriteButtonYOffset: CGFloat = -290
         static let favoriteButtonBGPadding: CGFloat = 4
         static let favoriteButtonSize: CGFloat = 40
     }

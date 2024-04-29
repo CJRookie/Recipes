@@ -60,25 +60,27 @@ struct MealDetail: View {
     @ViewBuilder
     private var detailContent: some View {
         if manager.detail.0 != nil {
-            ZStack {
-                ScrollView {
-                    VStack(spacing: Constant.MealDetail.mainContentVStackSpacing) {
-                        headingSection
-                        NavigationBar(selectedComponent: $selectedRecipeComponent)
-                        switch selectedRecipeComponent {
-                        case .instructions:
-                            instructionsSection
-                        case .ingredients:
-                            ingredientsSection
+            GeometryReader { proxy in
+                ZStack {
+                    ScrollView {
+                        VStack(spacing: Constant.MealDetail.mainContentVStackSpacing) {
+                            headingSection
+                            NavigationBar(selectedComponent: $selectedRecipeComponent)
+                            switch selectedRecipeComponent {
+                            case .instructions:
+                                instructionsSection
+                            case .ingredients:
+                                ingredientsSection
+                            }
                         }
                     }
+                    .padding(.bottom)
+                    .clipShape(RoundedRectangle(cornerRadius: Constant.MealDetail.cornerRadius))
+                    favoriteButton
+                        .padding(.trailing)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .offset(y: -proxy.frame(in: .local).height /  2)
                 }
-                .padding(.bottom)
-                .clipShape(RoundedRectangle(cornerRadius: Constant.MealDetail.cornerRadius))
-                favoriteButton
-                    .padding(.trailing)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .offset(y: Constant.MealDetail.favoriteButtonYOffset)
             }
         } else if manager.detail.1 == nil {
             ProgressView()
